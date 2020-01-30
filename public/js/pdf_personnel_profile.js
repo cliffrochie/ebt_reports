@@ -1,5 +1,126 @@
 
+var generatePersonalInformation = function(doc, data) {
 
+    // Date
+    doc.setFontSize(7);
+    doc.text(getCurrentDate(), 545, 18);
+
+    doc.setFontStyle('bold');
+
+    // Main-header
+    doc.setFontSize(14);
+    doc.text('PORTAL', 18, 50);
+    doc.text('PERSONNEL PROFILE', 18, 70);
+
+    // PERSONAL INFORMATION: Header 
+    // ===============================================================================================
+    doc.setFontSize(9);
+    doc.text('PERSONAL INFORMATION', 18, 110);
+    doc.rect(18, 120, 560, 130);
+
+    doc.setFontSize(7);
+    // PERSONAL INFORMATION: Lines
+    doc.line(290, 120, 290, 155); // Vertical
+    // Between: GENDER
+    doc.line(360, 120, 360, 155); // Vertical
+    // Between: BIRTHDAY
+    doc.line(430, 120, 430, 155); // Vertical
+    // Between: NATIONALITY
+    doc.line(500, 120, 500, 155); // Vertical
+    // Between: MARITAL
+    // ----
+    doc.line(18, 155, 578, 155); // Horizontal
+    // PRESENT ADDRESS: Lines
+    doc.line(430, 155, 430, 200); // Vertical
+    doc.line(18, 200, 578, 200); // Horizontal
+    // CONTACT DETAILS: Lines
+    doc.line(190, 200, 190, 250); // Vertical
+    // EMERGENCY CONTACT PERSON
+
+    // PERSONAL INFORMATION: Fields 
+    // -----------------------------------------------------------------------------------------------
+    doc.setFontStyle('bold');
+    doc.text('NAME', 25, 132);
+    doc.text('GENDER', 295, 132);
+    doc.text('BIRTHDAY', 365, 132);
+    doc.text('NATIONALITY', 435, 132);
+    doc.text('MARITAL STATUS', 505, 132);
+
+    // PERSONAL INFORMATION: Data
+    doc.setFontStyle('normal');
+    doc.text(data.name, 25, 143); // NAME: Dummy data
+    doc.text(data.gender, 295, 143); // GENDER: Dummy data
+    doc.text(data.birthdate, 365, 143); // BIRTH DATE: Dummy data
+    doc.text(data.nationality, 435, 143); // NATIONALITY: Dummy data
+    doc.text(data.marital_status, 505, 143); // MARITAL STATUS: Dummy data
+
+    // PRESENT ADDRESS: Fields  
+    // -----------------------------------------------------------------------------------------------
+    doc.setFontStyle('bold');
+    doc.text('PRESENT ADDRESS', 25, 167);
+
+    // PRESENT ADDRESS: Sub-Fields
+    doc.setFontStyle('italic');
+    doc.setFontSize(7);
+    doc.text('Street', 25, 179);
+    doc.text('City', 120, 179);
+    doc.text('State/Province', 190, 179);
+    doc.text('Country', 290, 179);
+    doc.text('Zip Code', 370, 179);
+
+    // PRESENT ADDRESS: Data
+    doc.setFontStyle('normal');
+    doc.text(data.street, 25, 190); // Street: Dummy data
+    doc.text(data.city, 120, 190); // City: Dummy data
+    doc.text(data.state_province, 190, 190); // State: Dummy data
+    doc.text(data.country, 290, 190); // Country: Dummy data
+    doc.text(data.zip, 370, 190); // Zip Code: Dummy data
+
+    // EMAIL ADDRESS: Fields  
+    // -----------------------------------------------------------------------------------------------
+    doc.setFontStyle('bold');
+    doc.text('EMAIL ADDRESS', 435, 167);
+    
+    // EMAIL ADDRESS: Data
+    doc.setFontStyle('normal');
+    doc.text(data.email, 435, 178);
+
+    // CONTACT DETAILS: Fields  
+    // -----------------------------------------------------------------------------------------------
+    doc.setFontStyle('bold');
+    doc.text('CONTACT DETAILS', 25, 212);
+    
+
+    // CONTACT DETAILS: Sub-Fields
+    doc.setFontStyle('italic');
+    doc.setFontSize(7); 
+    doc.text('Mobile No.', 25, 225);
+    doc.text('Telephone No.', 120, 225);
+
+    doc.setFontStyle('normal');
+    doc.text(data.mobile_number, 25, 236); // Mobile No.: Dummy data
+    doc.text(data.telephone_number, 120, 236); // Telephone No.: Dummy data
+
+    // EMERGENCY CONTACT PERSON: Fields  
+    // -----------------------------------------------------------------------------------------------
+    doc.setFontStyle('bold');
+    doc.text('EMERGENCY CONTACT INFORMATION', 195, 212);
+
+    // EMERGENCY CONTACT PERSON: Sub-Fields
+    doc.setFontStyle('italic');
+    doc.setFontSize(7); 
+    doc.text('Contact Person', 195, 225);
+    doc.text('Relationship', 320, 225);
+    doc.text('Mobile No.', 420, 225);
+    doc.text('Telephone No.', 500, 225);
+
+    // EMERGENCY CONTACT PERSON: Data
+    doc.setFontStyle('normal');
+    doc.text(data.emergency_person.contact_name, 195, 236); // Emergency Person: Dummy data
+    doc.text(data.emergency_person.relationship, 320, 236); // Relationship: Dummy data
+    doc.text(data.emergency_person.mobile, 420, 236); // Mobile No.: Dummy data
+    doc.text(data.emergency_person.home_telephone, 500, 236); // Telephone No.: Dummy data
+}
 
 
 // Functions: Employment Information
@@ -379,126 +500,10 @@ var generatePDF = function(data) {
     doc.setProperties({
         title: 'Personnel Profile',
     });
-    
-    // Date
-    doc.setFontSize(7);
-    doc.text(getCurrentDate(), 545, 18);
 
-    doc.setFontStyle('bold');
-
-    // Main-header
-    doc.setFontSize(14);
-    doc.text('PORTAL', 18, 50);
-    doc.text('PERSONNEL PROFILE', 18, 70);
-
-    // PERSONAL INFORMATION: Header 
+    // PERSONAL INFORMATION 
     // ===============================================================================================
-    doc.setFontSize(9);
-    doc.text('PERSONAL INFORMATION', 18, 110);
-    doc.rect(18, 120, 560, 130);
-
-    doc.setFontSize(7);
-    // PERSONAL INFORMATION: Lines
-    doc.line(290, 120, 290, 155); // Vertical
-    // Between: GENDER
-    doc.line(360, 120, 360, 155); // Vertical
-    // Between: BIRTHDAY
-    doc.line(430, 120, 430, 155); // Vertical
-    // Between: NATIONALITY
-    doc.line(500, 120, 500, 155); // Vertical
-    // Between: MARITAL
-    // ----
-    doc.line(18, 155, 578, 155); // Horizontal
-    // PRESENT ADDRESS: Lines
-    doc.line(430, 155, 430, 200); // Vertical
-    doc.line(18, 200, 578, 200); // Horizontal
-    // CONTACT DETAILS: Lines
-    doc.line(190, 200, 190, 250); // Vertical
-    // EMERGENCY CONTACT PERSON
-
-    // PERSONAL INFORMATION: Fields 
-    // -----------------------------------------------------------------------------------------------
-    doc.setFontStyle('bold');
-    doc.text('NAME', 25, 132);
-    doc.text('GENDER', 295, 132);
-    doc.text('BIRTHDAY', 365, 132);
-    doc.text('NATIONALITY', 435, 132);
-    doc.text('MARITAL STATUS', 505, 132);
-    
-    // PERSONAL INFORMATION: Data
-    doc.setFontStyle('normal');
-    doc.text(data.name, 25, 143); // NAME: Dummy data
-    doc.text(data.gender, 295, 143); // GENDER: Dummy data
-    doc.text(data.birthdate, 365, 143); // BIRTH DATE: Dummy data
-    doc.text(data.nationality, 435, 143); // NATIONALITY: Dummy data
-    doc.text(data.marital_status, 505, 143); // MARITAL STATUS: Dummy data
-
-    // PRESENT ADDRESS: Fields  
-    // -----------------------------------------------------------------------------------------------
-    doc.setFontStyle('bold');
-    doc.text('PRESENT ADDRESS', 25, 167);
-
-    // PRESENT ADDRESS: Sub-Fields
-    doc.setFontStyle('italic');
-    doc.setFontSize(7);
-    doc.text('Street', 25, 179);
-    doc.text('City', 120, 179);
-    doc.text('State/Province', 190, 179);
-    doc.text('Country', 290, 179);
-    doc.text('Zip Code', 370, 179);
-
-    // PRESENT ADDRESS: Data
-    doc.setFontStyle('normal');
-    doc.text(data.street, 25, 190); // Street: Dummy data
-    doc.text(data.city, 120, 190); // City: Dummy data
-    doc.text(data.state_province, 190, 190); // State: Dummy data
-    doc.text(data.country, 290, 190); // Country: Dummy data
-    doc.text(data.zip, 370, 190); // Zip Code: Dummy data
-
-    // EMAIL ADDRESS: Fields  
-    // -----------------------------------------------------------------------------------------------
-    doc.setFontStyle('bold');
-    doc.text('EMAIL ADDRESS', 435, 167);
-    
-    // EMAIL ADDRESS: Data
-    doc.setFontStyle('normal');
-    doc.text(data.email, 435, 178);
-
-    // CONTACT DETAILS: Fields  
-    // -----------------------------------------------------------------------------------------------
-    doc.setFontStyle('bold');
-    doc.text('CONTACT DETAILS', 25, 212);
-    
-
-    // CONTACT DETAILS: Sub-Fields
-    doc.setFontStyle('italic');
-    doc.setFontSize(7); 
-    doc.text('Mobile No.', 25, 225);
-    doc.text('Telephone No.', 120, 225);
-
-    doc.setFontStyle('normal');
-    doc.text(data.mobile_number, 25, 236); // Mobile No.: Dummy data
-    doc.text(data.telephone_number, 120, 236); // Telephone No.: Dummy data
-
-    // EMERGENCY CONTACT PERSON: Fields  
-    // -----------------------------------------------------------------------------------------------
-    doc.setFontStyle('bold');
-    doc.text('EMERGENCY CONTACT INFORMATION', 195, 212);
-
-    // EMERGENCY CONTACT PERSON: Sub-Fields
-    doc.setFontStyle('italic');
-    doc.setFontSize(7); 
-    doc.text('Contact Person', 195, 225);
-    doc.text('Relationship', 320, 225);
-    doc.text('Mobile No.', 420, 225);
-    doc.text('Telephone No.', 500, 225);
-
-    // EMERGENCY CONTACT PERSON: Data
-    doc.setFontStyle('normal');
-    doc.text(data.emergency_person.contact_name, 195, 236); // Emergency Person: Dummy data
-    doc.text(data.emergency_person.relationship, 320, 236); // Relationship: Dummy data
-    doc.text(data.emergency_person.mobile, 420, 236); // Mobile No.: Dummy data
-    doc.text(data.emergency_person.home_telephone, 500, 236); // Telephone No.: Dummy data
+    generatePersonalInformation(doc, data);
 
 
     // EMPLOYEE INFORMATION 

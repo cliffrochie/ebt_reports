@@ -3,7 +3,7 @@ var w;
 var strWindowFeatures = "scrollbars=yes,resizable=yes,width=900,height=600,top="+(screen.height-750)+",left="+(screen.width-1150);
 
 var openNewWindow = function(pdf) {
-    w = window.open(pdf.output('bloburl'), "personnel_profile", strWindowFeatures);
+    w = window.open(pdf.output('bloburl'), "new_window", strWindowFeatures);
 
 }
 

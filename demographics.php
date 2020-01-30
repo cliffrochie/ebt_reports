@@ -9,10 +9,16 @@
 <body>
     <h1>Auto generated Demographics PDF.</h1>
     <p>Refresh the page to automatically download the pdf file.</p>
+
+
     <script src="public/js/jspdf.min.js"></script>
     <script src="public/js/helper.js"></script>
     <script src="public/js/pdf_demographics.js"></script>
     <script src="public/js/pdfobject.min.js"></script>
     <script src="public/js/event.js"></script>
+
+    <script>
+        generatePDF();
+    </script>
 </body>
 </html>

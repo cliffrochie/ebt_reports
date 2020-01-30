@@ -1,0 +1,16 @@
+SELECT
+ED.`code`,
+ED.company,
+ED.branch,
+ED.`name`,
+ECD.U_EMPLOYEE_CONTACT_STREET AS "street",
+ECD.U_EMPLOYEE_CONTACT_CITY AS "city",
+ECD.U_EMPLOYEE_CONTACT_STATE_PROVINCE AS "state_province",
+ECD.U_EMPLOYEE_CONTACT_COUNTRY AS "country",
+ECD.U_EMPLOYEE_CONTACT_ZIP AS "zip",
+EJ.U_EMPLOYEE_EMPLOYMENT_JOB_TITLE AS "job_title",
+EJ.U_DEPARTMENT AS "department"
+FROM
+u_employee_details AS ED
+LEFT JOIN u_employee_job AS EJ ON ED.`CODE` = EJ.`CODE`
+LEFT JOIN u_employee_contact_details AS ECD ON ED.`CODE` = ECD.`CODE`

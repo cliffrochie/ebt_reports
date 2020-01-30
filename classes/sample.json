@@ -1,0 +1,76 @@
+{
+    "employees": [
+        {
+            "code": "C-10002",
+            "name": "John Doe",
+            "employment_details": [
+                {
+                    "company": "ABC",
+                    "branch": "Somewhere",
+                    "department": "IT",
+                    "position": "IT Staff"
+                },
+                {
+                    "company": "ABC",
+                    "branch": "Somewhere",
+                    "department": "IT",
+                    "position": "IT Staff"
+                },
+                {
+                    "company": "ABC",
+                    "branch": "Somewhere",
+                    "department": "IT",
+                    "position": "IT Staff"
+                }
+            ]
+        },
+        {
+            "code": "C-10002",
+            "name": "John Doe",
+            "employment_details": [
+                {
+                    "company": "ABC",
+                    "branch": "Somewhere",
+                    "department": "IT",
+                    "position": "IT Staff"
+                },
+                {
+                    "company": "ABC",
+                    "branch": "Somewhere",
+                    "department": "IT",
+                    "position": "IT Staff"
+                },
+                {
+                    "company": "ABC",
+                    "branch": "Somewhere",
+                    "department": "IT",
+                    "position": "IT Staff"
+                }
+            ]
+        },
+        {
+            "code": "C-10002",
+            "name": "John Doe",
+            "employment_details": [
+                {
+                    "company": "ABC",
+                    "branch": "Somewhere",
+                    "department": "IT",
+                    "position": "IT Staff"
+                },
+                {
+                    "company": "ABC",
+                    "branch": "Somewhere",
+                    "department": "IT",
+                    "position": "IT Staff"
+                },
+                {
+                    "company": "ABC",
+                    "branch": "Somewhere",
+                    "department": "IT",
+                    "position": "IT Staff"
+                }
+            ]
+        }
+    ]
+}

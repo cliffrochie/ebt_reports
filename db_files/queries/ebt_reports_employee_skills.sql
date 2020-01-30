@@ -1,0 +1,6 @@
+SELECT
+ES.U_EMPLOYEE_SKILL_SKILL AS es_skill,
+ES.U_EMPLOYEE_SKILL_YEARS_OF_EXPERIENCE AS es_experience
+FROM u_employee_details AS ED
+LEFT JOIN u_employee_skills AS ES ON ED.`CODE` = ES.`CODE`
+WHERE ED.`CODE` = "C-100002"

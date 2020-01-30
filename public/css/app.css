@@ -1,0 +1,132 @@
+body {
+    font-size: 14px;
+    font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif
+}
+
+a {
+    text-decoration: none;
+}
+
+
+#container {
+    position: relative;
+    display: inline-block;
+}
+
+label, input, button {
+    display: inline-block !important;
+    margin: 0.2rem 0 !important;
+}
+
+label[for=code] {
+    margin-right: 5px !important;
+}
+
+/* button:hover, button:focus {
+    cursor: pointer;
+    background-color: #2980B9;
+} */
+
+#generate_pdf {
+    display: inline-block;
+    font-size: 0.7rem;
+    color: #fff;
+    padding: .07rem .30rem !important;
+    border: 1px solid #375191;
+    border-radius: .25rem;
+    background-color: #375191;
+}
+
+#generate_pdf:hover {
+    background-color: #4e72cc;
+}
+
+.btn {
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.btn:hover {
+    color: #212529;
+    text-decoration: none
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #4987fa;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc
+}
+
+#search_employee {
+    margin-top: -0.17rem;
+    line-height: 1 !important;
+    margin-left: -1.55rem !important;
+    padding: .040rem .40rem !important;
+    border: 0.5px solid !important;
+    border-radius: .3rem !important;
+    border-color: #4987fa !important;
+    background-color: white !important;
+}
+
+input[type=text] {
+    border: 0.5px solid #4987fa;
+    border-radius: 0.3rem;
+    padding: 1.5px 5px;
+}
+
+input[type=text]:hover {
+    background-color: #f8f881;
+}
+
+
+
+
+
+
+
+
+
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    left: 190px;
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 220px;
+    box-shadow: 0px 3px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 5px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #ddd}
+  
+  /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+  .show {display:block;}
+

@@ -1,3 +1,4 @@
+// Dummy data
 var data = {
     department_population: [
         {name: 'No Department', total: 6},
@@ -14,7 +15,17 @@ var data = {
     ],
 }
 
-var generateDemographics = function(doc) {
+var generateDemographics = function(doc, data) {
+
+    doc.setFontSize(7);
+    doc.text(getCurrentDate(), 545, 18);
+
+    doc.setFontStyle('bold');
+
+    // Main-header
+    doc.setFontSize(14);
+    doc.text('PORTAL', 18, 50);
+    doc.text('SERVIO HRMS DEMOGRAPHICS', 18, 70);
 }
 
 
@@ -27,5 +38,6 @@ var generatePDF = function() {
         title: 'SERVIO HRMS Demographics',
     });
 
-    generateEmployeeCategory(doc);
+    generateDemographics(doc, data);
+    doc.save('demographics.pdf');
 }

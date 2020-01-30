@@ -526,7 +526,6 @@ var generatePDF = function(data) {
     
     // Details
     var height_extend = generateEmploymentInformation(doc, job_headers, job_details, ei_pos);
-    console.log(height_extend);
 
 
     // WORK EXPERIENCE

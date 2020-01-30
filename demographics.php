@@ -15,7 +15,7 @@
     <script src="public/js/helper.js"></script>
     <script src="public/js/pdf_demographics.js"></script>
     <script src="public/js/pdfobject.min.js"></script>
-    <script src="public/js/event.js"></script>
+    <script src="public/js/event_demographics.js"></script>
 
     <script>
         generatePDF();

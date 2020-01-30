@@ -35,7 +35,7 @@
     <script src="public/js/helper.js"></script>
     <script src="public/js/pdf_personnel_profile.js"></script>
     <script src="public/js/pdfobject.min.js"></script>
-    <script src="public/js/event.js"></script>
+    <script src="public/js/event_personnel_profile.js"></script>
     <script>
         // generatePDF();
     </script>

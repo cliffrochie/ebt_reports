@@ -17,9 +17,19 @@
             <h1>PORTAL</h1>
             <h1>DEMOGRAPHICS</h1>
         </div>
-        <div class="body">
-            <canvas id="canvas">
-            </canvas>
+        <div class="content">
+            <p>The demographics of employee population.</p>
+        </div>
+        <div class="chart-content">
+            <div class="left">
+                <canvas id="department_population"></canvas>
+            </div>
+            <div class="right">
+               <canvas id="gender_population"></canvas>
+            </div>
+            <div class="left">
+                <canvas id="category_population"></canvas>
+            </div>
         </div>
     </div>
     
@@ -35,7 +45,9 @@
         // generatePDF();
         document.getElementById('current_date').textContent = getCurrentDate();
 
-        var ctx = document.getElementById('canvas');
+        var dept_pop = document.getElementById('department_population');
+        var cate_pop = document.getElementById('category_population');
+        var gend_pop = document.getElementById('gender_population');
 
         var sample = {
             department_population: [
@@ -49,14 +61,18 @@
                 {name: 'Professional', total: 6},
                 {name: 'Operatives', total: 5},
                 {name: 'Office and Clerical Work', total: 2},
-                {name: 'Craft Workers', total: 1},
+                {name: 'Craft Workers', total: 9},
             ],
+            gender_population: [
+                {name: 'Male', total: 29, background_color: 'rgba(109, 156, 214, 1)', border_color: 'rgba(109, 156, 214, 1)'},
+                {name: 'Female', total: 34, background_color: 'rgba(212, 123, 166, 1)', border_color: 'rgba(212, 123, 166, 1)'}
+            ]
         }
 
-        var data = {
+        var dept_data = {
             labels: [],
             datasets: [{
-                label: '# of Employees per Category',
+                label: '# of Employees per Department',
                 data: [],
                 backgroundColor: 'rgba(255, 99, 132, 1)',
                 borderColor: 'rgba(255, 99, 132, 1)',
@@ -64,50 +80,165 @@
             }]
         };
 
+        var cate_data = {
+            labels: [],
+            datasets: [{
+                label: '# of Employees per Category',
+                data: [],
+                backgroundColor: 'rgba(50, 168, 86, 1)',
+                borderColor: 'rgba(50, 168, 86, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        var gend_data = {
+            labels: ['Male', 'Female'],
+            datasets: [{
+                label: '# of Employees per Gender',
+                data: [49, 31],
+                backgroundColor: ['rgba(109, 156, 214, 1)', 'rgba(212, 123, 166, 1)'],
+                borderColor: ['rgba(109, 156, 214, 1)', 'rgba(212, 123, 166, 1)'],
+                borderWidth: 1
+            }]
+        };
+
+        // Populate data: Department Population
         for(var i = 0; i < sample.department_population.length; i++) {
-            data.labels.push(sample.department_population[i].name);
-            data.datasets[0].data.push(sample.department_population[i].total);
+            dept_data.labels.push(sample.department_population[i].name);
+            dept_data.datasets[0].data.push(sample.department_population[i].total);
         }
 
-        // var data = {
-        //     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        //     datasets: [{
-        //         label: '# of Votes',
-        //         data: [12, 23, 3, 5, 6, 3],
-        //         backgroundColor: [
-        //             'rgba(255, 99, 132, 1)',
-        //             'rgba(54, 162, 235, 1)',
-        //             'rgba(255, 206, 86, 1)',
-        //             'rgba(75, 192, 192, 1)',
-        //             'rgba(153, 102, 255, 1)',
-        //             'rgba(255, 159, 64, 1)'
-        //         ],
-        //         borderColor: [
-        //             'rgba(255, 99, 132, 1)',
-        //             'rgba(54, 162, 235, 1)',
-        //             'rgba(255, 206, 86, 1)',
-        //             'rgba(75, 192, 192, 1)',
-        //             'rgba(153, 102, 255, 1)',
-        //             'rgba(255, 159, 64, 1)'
-        //         ],
-        //         borderWidth: 1
-        //     }]
-        // };
+        // Populate data: Category Population
+        for(var i = 0; i < sample.category_population.length; i++) {
+            cate_data.labels.push(sample.category_population[i].name);
+            cate_data.datasets[0].data.push(sample.category_population[i].total);
+        }
 
-        var stackedBar = new Chart(ctx, {
+
+        // Populate data: Gender Population
+        // for(var i = 0; i < sample.gender_population.lengtth; i++) {
+        //     gend_data.labels.push(sample.gender_population[i].name);
+        //     gend_data.datasets[0].data.push(sample.gender_population[i].total);
+        //     gend_data.datasets[0].backgroundColor.push(sample.gender_population[i].background_color);
+        //     gend_data.datasets[0].borderColor.push(sample.gender_population[i].border_color);
+        // }
+
+        // Chart.pluginService.register({
+		// 	beforeRender: function (chart) {
+		// 		if (chart.config.options.showAllTooltips) {
+		// 			// create an array of tooltips
+		// 			// we can't use the chart tooltip because there is only one tooltip per chart
+		// 			chart.pluginTooltips = [];
+		// 			chart.config.data.datasets.forEach(function (dataset, i) {
+		// 				chart.getDatasetMeta(i).data.forEach(function (sector, j) {
+		// 					chart.pluginTooltips.push(new Chart.Tooltip({
+		// 						_chart: chart.chart,
+		// 						_chartInstance: chart,
+		// 						_data: chart.data,
+		// 						_options: chart.options.tooltips,
+		// 						_active: [sector]
+		// 					}, chart));
+		// 				});
+		// 			});
+
+		// 			// turn off normal tooltips
+		// 			chart.options.tooltips.enabled = false;
+		// 		}
+		// 	},
+		// 	afterDraw: function (chart, easing) {
+		// 		if (chart.config.options.showAllTooltips) {
+		// 			// we don't want the permanent tooltips to animate, so don't do anything till the animation runs atleast once
+		// 			if (!chart.allTooltipsOnce) {
+		// 				if (easing !== 1)
+		// 					return;
+		// 				chart.allTooltipsOnce = true;
+		// 			}
+
+		// 			// turn on tooltips
+		// 			chart.options.tooltips.enabled = true;
+		// 			Chart.helpers.each(chart.pluginTooltips, function (tooltip) {
+		// 				tooltip.initialize();
+		// 				tooltip.update();
+		// 				// we don't actually need this since we are not animating tooltips
+		// 				tooltip.pivot();
+		// 				tooltip.transition(easing).draw();
+		// 			});
+		// 			chart.options.tooltips.enabled = false;
+		// 		}
+		// 	}
+		// })
+
+        
+
+        // Chart objects
+        var bar1 = new Chart(dept_pop, {
             type: 'horizontalBar',
-            data: data,
+            data: dept_data,
             options: {
                 scales: {
                     xAxes: [{
+                        gridLines: {
+                            display:false
+                        },
                         ticks: {
                             beginAtZero: true
                         }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display:false
+                        }   
                     }]
                 }
             }
         });
+
+        var bar2 = new Chart(cate_pop, {
+            type: 'horizontalBar',
+            data: cate_data,
+            options: {
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display:false
+                        },
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display:false
+                        }   
+                    }]
+                }
+            }
+        });
+
+        var bar3 = new Chart(gend_pop, {
+            type: 'pie',
+            data: gend_data,
+            options: {
+                showTooltips: true,
+            }
+        });
         
+        // var bar3 = new Chart(gend_pop).Bar(gend_data, {
+        //     showTooltips: false,
+        //     onAnimationComplete: function (){
+        //         var ctx = this.chart.gend_pop;
+        //         ctx.font = this.scale.font;
+        //         ctx.fillStyle = this.scale.textColor;
+        //         ctx.textAlign = "center";
+        //         ctx.textBaseline = "bottom";
+
+        //         this.dataset.forEach(function(dataset) {
+        //             dataset.bars.forEach(function(bar) {
+        //                 ctx.fillText(bar.value, bar.x, bar.y - 5);
+        //             });
+        //         });
+        //     }
+        // })
     </script>
 </body>
 </html>

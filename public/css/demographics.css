@@ -12,10 +12,44 @@ h1 {
     width: 800px;
 }
 
+
 .header {
-    margin: 0 30px;
     font-size: 0.6rem;
+}
+
+.content {
+    font-size: 0.9rem;
+}
+
+.header, .content {
+    margin: 0 30px;
     /* background-color: lightblue; */
+}
+
+.chart-content {
+    margin: 90px 10px;
+    position: relative; 
+    width: 100%;
+}
+
+.chart-content > canvas {
+    margin: 40px 10px;
+}
+
+.chart-content .left {
+    display: inline-block;
+    width: 390px;
+    /* background-color: lightblue; */
+}
+
+.chart-content .right {
+    display: inline-block;
+    width: 390px;
+    /* background-color: lightgreen; */
+}
+
+#department_population, #category_population {
+    display: inline-block;
 }
 
 #current_date {
@@ -25,6 +59,6 @@ h1 {
     margin: 5px 10px;
 }
 
-#canvas {
+#department_population {
     /* background-color: lightgreen; */
 }

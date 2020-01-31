@@ -20,12 +20,19 @@ var generateDemographics = function(doc, data) {
     doc.setFontSize(7);
     doc.text(getCurrentDate(), 545, 18);
 
-    doc.setFontStyle('bold');
-
     // Main-header
     doc.setFontSize(14);
+    doc.setFontStyle('bold');
+
     doc.text('PORTAL', 18, 50);
-    doc.text('SERVIO HRMS DEMOGRAPHICS', 18, 70);
+    doc.text('DEMOGRAPHICS', 18, 70);
+
+    // Content goes here
+    doc.setFontSize(10);
+    doc.setFontStyle('normal');
+
+    doc.text('No. of Employees per Category', 18, 110)
+    doc.text('Population', 18, 130);
 }
 
 

@@ -5,10 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="public/css/app.css">
+    <link rel="stylesheet" href="public/css/demographics.css">
 </head>
 <body>
-    <h1>Auto generated Demographics PDF.</h1>
-    <p>Refresh the page to automatically download the pdf file.</p>
+    <div class="container">
+        <h1>PORTAL</h1>
+        <h1>DEMOGRAPHICS</h1>
+    </div>
+    
 
 
     <script src="public/js/jspdf.min.js"></script>
@@ -18,7 +23,7 @@
     <script src="public/js/event_demographics.js"></script>
 
     <script>
-        generatePDF();
+        // generatePDF();
     </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 body {
     font-size: 14px;
-    font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif
+    font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
 }
 
 a {
@@ -95,15 +95,6 @@ input[type=text] {
 input[type=text]:hover {
     background-color: #f8f881;
 }
-
-
-
-
-
-
-
-
-
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {

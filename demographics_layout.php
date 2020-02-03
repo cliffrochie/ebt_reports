@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="public/css/demographics.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="demographics_content">
         <div class="date">
             <p id="current_date"></p>
         </div>
@@ -32,13 +32,15 @@
             </div>
         </div>
     </div>
-    
+    <div>
+        <button onclick="generatePDF()">Generate</button>
+    </div>
 
     <script src="public/js/chart.min.js"></script>
-    <script src="public/js/jspdf.min.js"></script>
+    <script src="public/js/jspdf.debug.js"></script>
+    <script src="public/js/html2pdf.js"></script>
     <script src="public/js/helper.js"></script>
     <script src="public/js/pdf_demographics.js"></script>
-    <script src="public/js/pdfobject.min.js"></script>
     <script src="public/js/event_demographics.js"></script>
 
     <script>
@@ -223,22 +225,34 @@
             }
         });
         
-        // var bar3 = new Chart(gend_pop).Bar(gend_data, {
-        //     showTooltips: false,
-        //     onAnimationComplete: function (){
-        //         var ctx = this.chart.gend_pop;
-        //         ctx.font = this.scale.font;
-        //         ctx.fillStyle = this.scale.textColor;
-        //         ctx.textAlign = "center";
-        //         ctx.textBaseline = "bottom";
 
-        //         this.dataset.forEach(function(dataset) {
-        //             dataset.bars.forEach(function(bar) {
-        //                 ctx.fillText(bar.value, bar.x, bar.y - 5);
-        //             });
-        //         });
-        //     }
-        // })
+        // onclick
+        function generatePDF() {
+            var doc = new jsPDF('p', 'pt', 'a4');
+            doc.internal.scaleFactor = 30;
+
+
+            var chart1 = document.getElementById('department_population')
+            var dataURL1 = chart1.toDataURL("image/png");
+
+            var width = 320;
+            var height = 160;
+
+            doc.addImage(dataURL1, 'PNG', 15, 10, width, height);
+
+
+            // var chart2 = document.getElementById('category_population')
+            // var dataURL2 = chart2.toDataURL();
+            // doc.addImage(dataURL2, 'JPEG', 15, 300);
+
+
+            // var chart3 = document.getElementById('gender_population')
+            // var dataURL3 = chart3.toDataURL();
+            // doc.addImage(dataURL3, 'JPEG', 15, 500);
+
+            doc.save('test.pdf');
+        }
+
     </script>
 </body>
 </html>

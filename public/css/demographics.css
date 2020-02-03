@@ -29,11 +29,11 @@ h1 {
 .chart-content {
     margin: 90px 10px;
     position: relative; 
-    width: 100%;
+    width: 70%;
 }
 
 .chart-content > canvas {
-    margin: 40px 10px;
+    margin: 20px 10px;
 }
 
 .chart-content .left {

@@ -102,9 +102,11 @@ input[type=text]:hover {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
-    min-width: 220px;
+    min-width: 300px;
+    height: 300px;
     box-shadow: 0px 3px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    overflow: auto;
   }
   
   /* Links inside the dropdown */

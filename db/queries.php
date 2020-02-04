@@ -38,7 +38,7 @@ class Query {
             ED.u_employee_middlename AS ed_middlename,
             ED.u_employee_lastname AS ed_lastname,
             ED.u_employee_nameext AS ed_extension,
-            ED.U_EMPLOYEE_GENEDER AS ed_gender,
+            ED.U_EMPLOYEE_GENDER AS ed_gender,
             ED.U_EMPLOYEE_BIRTHDATE AS ed_birthdate,
             ED.U_EMPLOYEE_MARITAL_STATUS AS ed_marital_status,
             ED.U_EMPLOYEE_NATIONALITY AS ed_nationality,

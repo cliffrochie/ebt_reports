@@ -2,7 +2,7 @@
 
 function connect() {
 
-    $SERVER = "192.168.1.23";
+    $SERVER = "192.168.1.22";
     $USERNAME = "hrms";
     $PASSWORD = "12345";
     $DB = "hrms";

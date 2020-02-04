@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Demographics</title>
     <link rel="stylesheet" href="public/css/app.css">
     <link rel="stylesheet" href="public/css/demographics.css">
 </head>
@@ -70,7 +70,7 @@
             legend: {
                 labels: {
                     fontStyle: "bold",
-                    fontSize: 16
+                    fontSize: 11
                 }
             },
             scales: {
@@ -81,7 +81,7 @@
                     ticks: {
                         beginAtZero: true,
                         fontStyle: "bold",
-                        fontSize: 16,
+                        fontSize: 11,
                     }
                 }],
                 yAxes: [{
@@ -90,7 +90,7 @@
                     },
                     ticks: {
                         fontStyle: "bold",
-                        fontSize: 16
+                        fontSize: 11
                     }
                 }]
             }
@@ -154,10 +154,10 @@
             options: options
         });
 
-        // var bar3 = new Chart(gend_pop, {
-        //     type: 'pie',
-        //     data: gend_data,
-        // });
+        var bar3 = new Chart(gend_pop, {
+            type: 'pie',
+            data: gend_data,
+        });
     </script>
 
     <script>
@@ -170,32 +170,33 @@
             console.log('Report Image URL: '+ imgData);
 
             var doc = new jsPDF('p', 'pt', 'a4');
-            doc.internal.scaleFactor = 2.5;
-            doc.addImage(imgData, 'JPEG', 10, 10);
+
+            var width = doc.internal.pageSize.getWidth;
+            var height = doc.internal.pageSize.getHeight;
+
+            doc.addImage(imgData, 'JPEG', 10, 10, width, height);
             doc.save('sample.pdf');
         }
 
-        html2canvas(source, {
-            scale: 2,
-            onrendered: myRenderFunction
-        })
-        // source.style.display = 'none';
+        // html2canvas(source, {
+        //     onrendered: myRenderFunction
+        // })
+        // destination.style.display = 'none';
 
         
 
         var btn = document.getElementById('pdfDownloader');
         btn.addEventListener('click', function() {
-            // html2canvas(document.getElementById('printDiv'), {
-            //     scale: 2,
-            //     onrendered: function(canvas) {
-            //         var imgData = canvas.toDataURL('image/png');
-            //         console.log('Report Image URL: '+ imgData);
-            //         var doc = new jsPDF('p', 'pt', 'a4');
+            html2canvas(document.getElementById('printDiv'), {
+                onrendered: function(canvas) {
+                    var imgData = canvas.toDataURL('image/png');
+                    console.log('Report Image URL: '+ imgData);
+                    var doc = new jsPDF('p', 'pt', 'a4');
 
-            //         doc.addImage(imgData, 'PNG', 10, 10);
-            //         doc.save('sample.pdf');
-            //     }
-            // })
+                    doc.addImage(imgData, 'PNG', 10, 10);
+                    doc.save('sample.pdf');
+                }
+            })
 
         })
     </script>

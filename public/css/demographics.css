@@ -29,23 +29,17 @@ h1 {
 .chart-content {
     margin: 90px 10px;
     position: relative; 
-    width: 70%;
+    width: 100%;
 }
 
 .chart-content > canvas {
-    margin: 20px 10px;
+    margin: 20px 90px;
 }
 
-.chart-content .left {
+.chart-content {
     display: inline-block;
-    width: 390px;
+    width: 400px;
     /* background-color: lightblue; */
-}
-
-.chart-content .right {
-    display: inline-block;
-    width: 390px;
-    /* background-color: lightgreen; */
 }
 
 #department_population, #category_population {

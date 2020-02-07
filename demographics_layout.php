@@ -23,12 +23,13 @@
         <div class="chart-content">
             <div class="left">
                 <canvas id="department_population"></canvas>
+                <canvas id="category_population"></canvas>
+                <canvas id="gender_population"></canvas>
+                <canvas id="job_vacancies_population"></canvas>
             </div>
             <div class="right">
-               <canvas id="gender_population"></canvas>
             </div>
             <div class="left">
-                <canvas id="category_population"></canvas>
             </div>
         </div>
     </div>
@@ -50,24 +51,30 @@
         var dept_pop = document.getElementById('department_population');
         var cate_pop = document.getElementById('category_population');
         var gend_pop = document.getElementById('gender_population');
+        var jobv_pop = document.getElementById('job_vacancies_population');
 
         var sample = {
             department_population: [
                 {name: 'No Department', total: 6},
                 {name: 'EngTech Global Solutions', total: 5},
                 {name: 'Computer Education Department', total: 4},
-                {name: 'Business Education Department', total: 4},  
+                {name: 'Business Education Department', total: 4},
             ],
             category_population: [
                 {name: 'Technical', total: 7},
                 {name: 'Professional', total: 6},
                 {name: 'Operatives', total: 5},
-                {name: 'Office and Clerical Work', total: 2},
+                {name: 'Office and Clerical Work', total: 3},
                 {name: 'Craft Workers', total: 9},
             ],
             gender_population: [
-                {name: 'Male', total: 29, background_color: 'rgba(109, 156, 214, 1)', border_color: 'rgba(109, 156, 214, 1)'},
-                {name: 'Female', total: 34, background_color: 'rgba(212, 123, 166, 1)', border_color: 'rgba(212, 123, 166, 1)'}
+                {name: 'Male', total: 12, background_color: 'rgba(109, 156, 214, 1)', border_color: 'rgba(109, 156, 214, 1)'},
+                {name: 'Female', total: 8, background_color: 'rgba(212, 123, 166, 1)', border_color: 'rgba(212, 123, 166, 1)'}
+            ],
+            job_vacancies: [
+                {title: 'Accounts Clerk', total: 3, background_color: 'rgba(52, 180, 235, 1)', border_color: 'rgba(52, 180, 235, 1)'},
+                {title: 'Instructor', total: 1, background_color: 'rgba(96, 179, 135, 1)', border_color: 'rgba(96, 179, 135, 1)'},
+                {title: 'Assistant Professor', total: 2, background_color: 'rgba(209, 183, 111, 1)', border_color: 'rgba(209, 183, 111, 1)'},
             ]
         }
 
@@ -97,12 +104,23 @@
             labels: ['Male', 'Female'],
             datasets: [{
                 label: '# of Employees per Gender',
-                data: [49, 31],
+                data: [12, 8],
                 backgroundColor: ['rgba(109, 156, 214, 1)', 'rgba(212, 123, 166, 1)'],
                 borderColor: ['rgba(109, 156, 214, 1)', 'rgba(212, 123, 166, 1)'],
                 borderWidth: 1
             }]
         };
+
+        var jobv_data = {
+            labels: [],
+            datasets: [{
+                labels: 'Job Vacancies',
+                data: [],
+                backgroundColor: [],
+                borderColor: [],
+                borderWidth: 1
+            }]
+        }
 
         // Populate data: Department Population
         for(var i = 0; i < sample.department_population.length; i++) {
@@ -116,67 +134,30 @@
             cate_data.datasets[0].data.push(sample.category_population[i].total);
         }
 
-
-        // Populate data: Gender Population
-        // for(var i = 0; i < sample.gender_population.lengtth; i++) {
-        //     gend_data.labels.push(sample.gender_population[i].name);
-        //     gend_data.datasets[0].data.push(sample.gender_population[i].total);
-        //     gend_data.datasets[0].backgroundColor.push(sample.gender_population[i].background_color);
-        //     gend_data.datasets[0].borderColor.push(sample.gender_population[i].border_color);
-        // }
-
-        // Chart.pluginService.register({
-		// 	beforeRender: function (chart) {
-		// 		if (chart.config.options.showAllTooltips) {
-		// 			// create an array of tooltips
-		// 			// we can't use the chart tooltip because there is only one tooltip per chart
-		// 			chart.pluginTooltips = [];
-		// 			chart.config.data.datasets.forEach(function (dataset, i) {
-		// 				chart.getDatasetMeta(i).data.forEach(function (sector, j) {
-		// 					chart.pluginTooltips.push(new Chart.Tooltip({
-		// 						_chart: chart.chart,
-		// 						_chartInstance: chart,
-		// 						_data: chart.data,
-		// 						_options: chart.options.tooltips,
-		// 						_active: [sector]
-		// 					}, chart));
-		// 				});
-		// 			});
-
-		// 			// turn off normal tooltips
-		// 			chart.options.tooltips.enabled = false;
-		// 		}
-		// 	},
-		// 	afterDraw: function (chart, easing) {
-		// 		if (chart.config.options.showAllTooltips) {
-		// 			// we don't want the permanent tooltips to animate, so don't do anything till the animation runs atleast once
-		// 			if (!chart.allTooltipsOnce) {
-		// 				if (easing !== 1)
-		// 					return;
-		// 				chart.allTooltipsOnce = true;
-		// 			}
-
-		// 			// turn on tooltips
-		// 			chart.options.tooltips.enabled = true;
-		// 			Chart.helpers.each(chart.pluginTooltips, function (tooltip) {
-		// 				tooltip.initialize();
-		// 				tooltip.update();
-		// 				// we don't actually need this since we are not animating tooltips
-		// 				tooltip.pivot();
-		// 				tooltip.transition(easing).draw();
-		// 			});
-		// 			chart.options.tooltips.enabled = false;
-		// 		}
-		// 	}
-		// })
-
-        
+        // Populate data: Job Vacancies
+        for(var i = 0; i < sample.job_vacancies.length; i++) {
+            jobv_data.labels.push(sample.job_vacancies[i].title);
+            jobv_data.datasets[0].data.push(sample.job_vacancies[i].total);
+            jobv_data.datasets[0].backgroundColor.push(sample.job_vacancies[i].background_color);
+            jobv_data.datasets[0].borderColor.push(sample.job_vacancies[i].border_color);
+        }
+  
 
         // Chart objects
         var bar1 = new Chart(dept_pop, {
             type: 'horizontalBar',
             data: dept_data,
             options: {
+                tooltips: {
+                    "enabled": false
+                },
+                hover: {
+                    "mode": null,
+                    animationDuration: 0
+                },
+                legend: {
+                    display: false,
+                },
                 scales: {
                     xAxes: [{
                         gridLines: {
@@ -191,7 +172,25 @@
                             display:false
                         }   
                     }]
-                }
+                },
+                "animation": {
+                    "onComplete": function () {
+                        var chartInstance = this.chart,
+                            ctx = chartInstance.ctx;
+                        
+                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+
+                        this.data.datasets.forEach(function (dataset, i) {
+                            var meta = chartInstance.controller.getDatasetMeta(i);
+                            meta.data.forEach(function (bar, index) {
+                                var data = dataset.data[index];                            
+                                ctx.fillText(data, bar._model.x - 14, bar._model.y + 6.5);
+                            });
+                        });
+                    }
+                },
             }
         });
 
@@ -199,6 +198,16 @@
             type: 'horizontalBar',
             data: cate_data,
             options: {
+                tooltips: {
+                    "enabled": false
+                },
+                hover: {
+                    "mode": null,
+                    animationDuration: 0
+                },
+                legend: {
+                    display: false,
+                },
                 scales: {
                     xAxes: [{
                         gridLines: {
@@ -213,15 +222,132 @@
                             display:false
                         }   
                     }]
-                }
+                },
+                "animation": {
+                    "onComplete": function () {
+                        var chartInstance = this.chart,
+                            ctx = chartInstance.ctx;
+                        
+                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+
+                        this.data.datasets.forEach(function (dataset, i) {
+                            var meta = chartInstance.controller.getDatasetMeta(i);
+                            meta.data.forEach(function (bar, index) {
+                                var data = dataset.data[index];                            
+                                ctx.fillText(data, bar._model.x - 14, bar._model.y + 6.5);
+                            });
+                        });
+                    }
+                },
             }
         });
 
         var bar3 = new Chart(gend_pop, {
-            type: 'pie',
+            type: 'bar',
             data: gend_data,
             options: {
-                showTooltips: true,
+                tooltips: {
+                    "enabled": false
+                },
+                hover: {
+                    "mode": null,
+                    animationDuration: 0
+                },
+                legend: {
+                    display: false,
+                },
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display:false
+                        },
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display:false
+                        },
+                        ticks: {
+                            beginAtZero: true
+                        }   
+                    }]
+                },
+                "animation": {
+                    "onComplete": function () {
+                        var chartInstance = this.chart,
+                            ctx = chartInstance.ctx;
+                        
+                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+
+                        this.data.datasets.forEach(function (dataset, i) {
+                            var meta = chartInstance.controller.getDatasetMeta(i);
+                            meta.data.forEach(function (bar, index) {
+                                var data = dataset.data[index];                            
+                                ctx.fillText(data, bar._model.x, bar._model.y + 25);
+                            });
+                        });
+                    }
+                },
+            }
+        });
+
+
+        var bar4 = new Chart(jobv_pop, {
+            type: 'bar',
+            data: jobv_data,
+            options: {
+                tooltips: {
+                    "enabled": false
+                },
+                hover: {
+                    "mode": null,
+                    animationDuration: 0
+                },
+                legend: {
+                    display: false,
+                },
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display:false
+                        },
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display:false
+                        },
+                        ticks: {
+                            beginAtZero: true
+                        }   
+                    }]
+                },
+                "animation": {
+                    "onComplete": function () {
+                        var chartInstance = this.chart,
+                            ctx = chartInstance.ctx;
+                        
+                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+
+                        this.data.datasets.forEach(function (dataset, i) {
+                            var meta = chartInstance.controller.getDatasetMeta(i);
+                            meta.data.forEach(function (bar, index) {
+                                var data = dataset.data[index];                            
+                                ctx.fillText(data, bar._model.x, bar._model.y + 25);
+                            });
+                        });
+                    }
+                },
             }
         });
         
@@ -231,24 +357,55 @@
             var doc = new jsPDF('p', 'pt', 'a4');
             doc.internal.scaleFactor = 30;
 
-
-            var chart1 = document.getElementById('department_population')
+            var chart1 = document.getElementById('department_population');
             var dataURL1 = chart1.toDataURL("image/png");
 
-            var width = 320;
-            var height = 160;
+            var chart2 = document.getElementById('category_population');
+            var dataURL2 = chart2.toDataURL('image/png');
 
-            doc.addImage(dataURL1, 'PNG', 15, 10, width, height);
+            var chart3 = document.getElementById('gender_population')
+            var dataURL3 = chart3.toDataURL();
+
+            var chart4 = document.getElementById('job_vacancies_population')
+            var dataURL4 = chart4.toDataURL();
+
+            var width = 260;
+            var height = 130;
 
 
-            // var chart2 = document.getElementById('category_population')
-            // var dataURL2 = chart2.toDataURL();
-            // doc.addImage(dataURL2, 'JPEG', 15, 300);
+            console.log(dataURL4);
+
+            // Heading
+            // ----------------------------------------------------------------------
+            // Date
+            doc.setFontSize(7);
+            doc.text(getCurrentDate(), 545, 18);
 
 
-            // var chart3 = document.getElementById('gender_population')
-            // var dataURL3 = chart3.toDataURL();
-            // doc.addImage(dataURL3, 'JPEG', 15, 500);
+            // Main-header
+            doc.setFontStyle('bold');
+            doc.setFontSize(14);
+            doc.text('PORTAL', 18, 50);
+            doc.text('DEMOGRAPHICS', 18, 70);
+            
+            doc.setFontStyle('normal');
+            doc.setFontSize(8);
+            doc.text('The demographics of employee data.', 18, 100)
+
+            doc.setTextColor(94, 92, 92);   
+            doc.text('No. of Employees per Department', 100, 140);
+            doc.addImage(dataURL1, 'PNG', 20, 150, width, height);
+
+            doc.text('No. of Employees per Category', 380, 140);
+            doc.addImage(dataURL2, 'PNG', 300, 150, width, height);
+
+            doc.text('No. of Employees per Gender', 100, 340);
+            doc.addImage(dataURL3, 'PNG', 20, 350, width, height);
+            
+            doc.text('No. of Job Vacancies and its Position', 380, 340);
+            doc.addImage(dataURL4, 'PNG', 300, 350, width, height);
+
+            
 
             doc.save('test.pdf');
         }

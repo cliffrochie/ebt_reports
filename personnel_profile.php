@@ -21,7 +21,7 @@
             <div id="dropdown" class="dropdown-content">
                 <!-- content here -->
             </div>
-            <a id="generate_pdf" href="javascript:;">Preview</a>
+            <a id="generate_personnel_profile" href="javascript:;">Preview</a>
         </form>
     </div>
 

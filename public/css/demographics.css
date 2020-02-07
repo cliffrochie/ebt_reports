@@ -9,7 +9,7 @@ h1 {
 .container {
     display: relative;
     border: 1px solid black;
-    width: 800px;
+    width: 900px;
 }
 
 
@@ -27,8 +27,9 @@ h1 {
 }
 
 .chart-content {
-    margin: 90px 10px;
+    display: inline-block;
     position: relative; 
+    margin: 90px 10px;
     width: 100%;
 }
 
@@ -36,15 +37,10 @@ h1 {
     margin: 20px 90px;
 }
 
-.chart-content {
-    display: inline-block;
-    width: 400px;
-    /* background-color: lightblue; */
-}
 
 #department_population, #category_population {
     display: inline-block;
-}
+}   
 
 #current_date {
     font-size: .7rem;
@@ -53,6 +49,16 @@ h1 {
     margin: 5px 10px;
 }
 
-#department_population {
-    /* background-color: lightgreen; */
+.chart-content .left {
+    width: 400px;
+    display: inline-block;
+}
+
+.chart-content .right {
+    width: 400px;
+    display: inline-block;
+}
+
+canvas {
+    margin-bottom: 50px;
 }

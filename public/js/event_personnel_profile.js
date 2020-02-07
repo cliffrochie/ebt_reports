@@ -57,7 +57,7 @@ search.addEventListener('click', function() {
 });
 
 
-var submit = document.getElementById('generate_pdf');
+var submit = document.getElementById('generate_personnel_profile');
 submit.addEventListener('click', function() {
 
     var code = document.getElementById('code').value;

@@ -27,7 +27,7 @@ class DB {
             return null;
         }
         catch(Exception $e) {
-            echo "--> Uncaught exception: ". $e->getMessage(); "<br/>";
+            echo "--> Uncaught exception: ". $e->getMessage() ."<br/>";
         }
         finally {
             $db->close();
@@ -88,7 +88,7 @@ class DB {
 
         }
         catch(Exception $e) {
-            // echo "--> Uncaught exception: ". $e->getMessage(); "<br/>";
+            // echo "--> Uncaught exception: ". $e->getMessage() ."<br/>";
         }
         finally {
             $db->close();
@@ -123,7 +123,7 @@ class DB {
             return null;
         }
         catch(Exception $e) {
-            echo "--> Uncaught exception: ". $e->getMessage(); "<br/>";
+            echo "--> Uncaught exception: ". $e->getMessage() ."<br/>";
         }
         finally {
             $db->close();
@@ -159,7 +159,7 @@ class DB {
             return null;
         }
         catch(Exception $e) {
-            echo "--> Uncaught exception: ". $e->getMessage(); "<br/>";
+            echo "--> Uncaught exception: ". $e->getMessage() ."<br/>";
         }
         finally {
             $db->close();
@@ -193,7 +193,7 @@ class DB {
             return null;
         }
         catch(Exception $e) {
-            echo "--> Uncaught exception: ". $e->getMessage(); "<br/>";
+            echo "--> Uncaught exception: ". $e->getMessage() ."<br/>";
         }
         finally {
             $db->close();
@@ -221,7 +221,7 @@ class DB {
             }
         }
         catch(Exception $e) {
-            echo "--> Uncaught exception: ". $e->getMessage(); "<br/>";
+            echo "--> Uncaught exception: ". $e->getMessage() ."<br/>";
         }
         finally {
             $db->close();
@@ -241,13 +241,22 @@ class DB {
             $result = $db->query(Query::getEmployeeCountPerDepartment());
 
             if($result->num_rows > 0) {
-                while($data = $result->fetch_assoc()) {
 
+                $department_population = [];
+
+                while($data = $result->fetch_assoc()) {
+                    $dept = new Demographics();
+                    $dept->name = $data[0];
+                    $dept->population = $data[1];
+                    
+                    array_push($department_population, $dept);
                 }
+
+                return $records;
             }
         }
         catch(Exception $e) {
-            echo "--> Uncaught exception: ". $e->getMessage(); "<br/>";
+            echo "--> Uncaught exception: ". $e->getMessage() ."<br/>";
         }
         finally {
             $db->close();
@@ -271,7 +280,32 @@ class DB {
             }
         }
         catch(Exception $e) {
-            echo "--> Uncaught exception: ". $e->getMessage(); "<br/>";
+            echo "--> Uncaught exception: ". $e->getMessage() ."<br/>";
+        }
+        finally {
+            $db->close();
+        }
+    }
+
+    public static function getJobVacany() {
+
+        $db = connect();
+
+        try {
+
+            $records = [];
+
+            $result = $db->query($query::getJobVacancy());
+            
+            if($result->num_rows > 0) {
+                while($data = $result->fetch_assoc()) {
+
+                }
+            }
+
+        }
+        catch(Exception $e) {
+            echo "--> Uncaught exception: ". $e->getMessage() ."<br/>";
         }
         finally {
             $db->close();
@@ -279,3 +313,8 @@ class DB {
     }
 }
 
+
+
+echo "<pre>";
+print_r(DB::getEmployeeCountPerCategory());
+echo "</pre>";

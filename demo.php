@@ -21,7 +21,24 @@
     <script src="public/js/chart.min.js"></script>
     <script src="public/js/jspdf.debug.js"></script>
     <script src="public/js/html2canvas.js"></script>
+    <script>
+        var string = "02/20/2020";
+        var result = "";
 
-  
+        if(string.indexOf("/") > -1 && string.split("/").length == 3) {
+            console.log("++");
+            result = string.split('/')[2] +"-"+ string.split('/')[0] +"-"+ string.split('/')[1]
+        }
+        else {  
+            result = "Present!";
+        }
+        console.log(result);
+        console.log("-----");
+
+        var today = new Date().toJSON().slice(0,10);
+        var date2 =  today.split("-")[1] +"/"+ today.split("-")[2] +"/"+ today.split("-")[0];
+        console.log(today);
+        console.log(date2);
+    </script>
 </body>
 </html>

@@ -31,7 +31,6 @@ function displayList() {
 function populate(employees) {
     var dropdown = document.getElementById('dropdown');
 
-
     for(var i = 0; i < employees.length; i++) {
 
         var a = document.createElement('a');

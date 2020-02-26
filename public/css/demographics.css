@@ -8,7 +8,7 @@ h1 {
 
 .container {
     display: relative;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width: 900px;
 }
 
@@ -61,4 +61,24 @@ h1 {
 
 canvas {
     margin-bottom: 50px;
+}
+
+.items {
+    display: flex;
+}
+
+
+#generate_pdf {
+    display: inline-block;
+    font-size: 0.7rem;
+    color: #fff;
+    padding: .07rem .30rem !important;
+    border: 1px solid #375191;
+    border-radius: .25rem;
+    background-color: #375191;
+}
+
+#generate_pdf:hover {
+    background-color: #4e72cc;
+    cursor: pointer;
 }

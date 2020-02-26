@@ -177,5 +177,19 @@ class Query {
 
         return $sql;
     }
+
+    public static function getJobVacancy() {
+
+        $sql = '
+            SELECT
+            jv.u_job_title AS job_title,
+            jv.u_jt_num_of_position AS total_vacancies
+            FROM
+            u_hr_job_vacancies AS jv
+            WHERE jv.U_JT_VACANCY_STATUS = "Active"
+        '
+
+        return $sql;
+    }
 }
 

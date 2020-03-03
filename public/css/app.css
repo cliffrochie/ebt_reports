@@ -27,7 +27,7 @@ label[for=code] {
     background-color: #2980B9;
 } */
 
-#generate_pdf {
+#generate_personnel_profile {
     display: inline-block;
     font-size: 0.7rem;
     color: #fff;
@@ -37,7 +37,7 @@ label[for=code] {
     background-color: #375191;
 }
 
-#generate_pdf:hover {
+#generate_personnel_profile:hover {
     background-color: #4e72cc;
 }
 

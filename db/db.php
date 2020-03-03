@@ -8,6 +8,14 @@ include_once(dirname(__FILE__) .'/../classes/Demographics.php');
 
 class DB {
 
+    public static function checkValue($data) {
+        $result = '';
+        if($data != null) {
+            $result = $data;
+        }
+        return $result;
+    }
+
     public static function getEmployees() {
         $db = connect();
 
@@ -47,6 +55,7 @@ class DB {
                     $employee->message = "Fetch data success!";
 
                     // Basic Details
+                    $employee->code = self::checkValue($data['code']);
                     $employee->name = $data['name'] != '' || $data['name'] != null ? $data['name'] : '';
                     $employee->firstname = $data['ed_firstname'] != '' || $data['ed_firstname'] != null ? $data['ed_firstname'] : '';
                     $employee->middlename = $data['ed_middlename'] != '' || $data['ed_middlename'] != null ? $data['ed_middlename'] : '';
@@ -144,10 +153,10 @@ class DB {
                     $info = new EducationBackground();
                     $info->code = $data['code'] != '' || $data['code'] != null ? $data['code'] : '';
                     $info->background_level = $data['background_level'] != '' || $data['background_level'] != null ? $data['background_level'] : '';
-                    $info->school = $data['school'] != '' || $data['school'] != null ? $data['school'] : '';
+                    $info->school_name = $data['school'] != '' || $data['school'] != null ? $data['school'] : '';
                     $info->degree = $data['program'] != '' || $data['program'] != null ? $data['program'] : '';
                     $info->date_start = $data['date_start'] != '' || $data['date_start'] != null ? $data['date_start'] : '';
-                    $info->data_end = $data['date_end'] != '' || $data['date_end'] != null ? $data['date_end'] : '';
+                    $info->date_end = $data['date_end'] != '' || $data['date_end'] != null ? $data['date_end'] : '';
                     $info->year_graduated = $data['year_graduated'] != '' || $data['year_graduated'] != null ? $data['year_graduated'] : '';
                     $info->honors = $data['honors'] != '' || $data['honors'] != null ? $data['honors'] : '';
 
@@ -236,8 +245,6 @@ class DB {
 
         try {
 
-            $records = [];
-
             $result = $db->query(Query::getEmployeeCountPerDepartment());
 
             if($result->num_rows > 0) {
@@ -252,7 +259,7 @@ class DB {
                     array_push($department_population, $dept);
                 }
 
-                return $records;
+                return $department_population;
             }
         }
         catch(Exception $e) {
@@ -269,14 +276,21 @@ class DB {
 
         try {
 
-            $records = [];
-
             $result = $db->query(Query::getEmployeeCountPerCategory());
 
             if($result->num_rows > 0) {
+
+                $category_population = [];
+
                 while($data = $result->fetch_assoc()) {
-                    
+                    $category = new Demographics();
+                    $category->name = $data['job_category'];
+                    $category->population = $data['job_population'];
+
+                    array_push($category_population, $category);
                 }
+
+                return $category_population;
             }
         }
         catch(Exception $e) {
@@ -287,7 +301,40 @@ class DB {
         }
     }
 
-    public static function getJobVacany() {
+    public static function getEmployeeCountPerGender() {
+        
+        $db = connect();
+
+        try {
+
+            $records = [];
+
+            $result = $db->query(Query::getEmployeeCountPerGender());
+
+            if($result->num_rows > 0) {
+
+                $gender_population = [];
+
+                while($data = $result->fetch_assoc()) {
+                    $gender = new Demographics();
+                    $gender->name = $data['gender'];
+                    $gender->population = $data['gender_population'];
+
+                    array_push($gender_population, $gender);
+                }
+
+                return $gender_population;
+            }
+        }
+        catch(Exception $e) {
+            echo "--> Uncaught exception: ". $e->getMessage() ."<br/>";
+        }
+        finally {
+            $db->close();
+        }
+    }
+
+    public static function getJobVacancy() {
 
         $db = connect();
 
@@ -295,12 +342,21 @@ class DB {
 
             $records = [];
 
-            $result = $db->query($query::getJobVacancy());
+            $result = $db->query(Query::getJobVacancy());
             
             if($result->num_rows > 0) {
-                while($data = $result->fetch_assoc()) {
 
+                $job_vacancies = [];
+
+                while($data = $result->fetch_assoc()) {
+                    $vacancy = new Demographics();
+                    $vacancy->name = $data['job_title'];
+                    $vacancy->population = $data['total_vacancies'];
+
+                    array_push($job_vacancies, $vacancy);
                 }
+
+                return $job_vacancies;
             }
 
         }
@@ -312,9 +368,3 @@ class DB {
         }
     }
 }
-
-
-
-echo "<pre>";
-print_r(DB::getEmployeeCountPerCategory());
-echo "</pre>";

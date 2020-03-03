@@ -19,6 +19,7 @@ class Query {
             ED.NAME AS name
             FROM
             u_employee_details AS ED
+            WHERE ED.u_employee_employment_status <> "Resigned"
             ORDER BY ED.CODE, ED.NAME
         ';
 
@@ -76,7 +77,8 @@ class Query {
         u_employee_details AS ED
         LEFT JOIN u_employee_job AS EJ ON ED.`CODE` = EJ.`CODE`
         LEFT JOIN u_employee_reports_to AS ER ON ER.`code` = EJ.`code`
-        WHERE ED.`CODE` = "'. $id .'"
+        WHERE EJ.u_current_job = 1
+        AND ED.`CODE` = "'. $id .'"
         ';
     
         return $sql;
@@ -178,6 +180,22 @@ class Query {
         return $sql;
     }
 
+    public static function getEmployeeCountPerGender() {
+
+        $sql = '
+            SELECT DISTINCT
+            ED.U_EMPLOYEE_GENDER AS gender,
+            (
+                SELECT COUNT(u_employee_details.`CODE`) 
+                FROM u_employee_details 
+                WHERE u_employee_details.U_EMPLOYEE_GENDER = gender
+            ) AS gender_population
+            FROM u_employee_details AS ED	
+        ';
+
+        return $sql;
+    }
+
     public static function getJobVacancy() {
 
         $sql = '
@@ -187,7 +205,7 @@ class Query {
             FROM
             u_hr_job_vacancies AS jv
             WHERE jv.U_JT_VACANCY_STATUS = "Active"
-        '
+        ';
 
         return $sql;
     }

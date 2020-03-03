@@ -1,21 +1,17 @@
 <?php
-include(dirname(__FILE__) .'/../db/db.php');
-
-
+include_once(dirname(__FILE__) .'/../db/db.php');
 
 class EmploymentDetails {
     // Employee Details
     public $code;
     public $company;
     public $branch;
-    public $job_title;
+    public $job_title;  
     public $job_category;
     public $employment_status;
     public $department;
     public $supervisor;
 }
-
-
 
 class EducationBackground {
     // Education Details
@@ -25,10 +21,9 @@ class EducationBackground {
     public $degree;
     public $date_start;
     public $date_end;
-    public $year_graudated;
+    public $year_graduated;
     public $honors;
 }
-
 
 class WorkExperience {
     public $company;
@@ -38,7 +33,6 @@ class WorkExperience {
     public $date_to;
 }
 
-
 class EmergencyContactPerson {
     public $code;
     public $contact_name;
@@ -47,7 +41,6 @@ class EmergencyContactPerson {
     public $work_telephone;
     public $home_telephone;
 }
-
 
 class Employee {
 
@@ -103,7 +96,4 @@ class Employee {
         return DB::getEmergencyContactPerson($id);
     }
 }
-
-
-
 

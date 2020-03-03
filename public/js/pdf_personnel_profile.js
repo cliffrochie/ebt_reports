@@ -1,3 +1,9 @@
+var checkEmpty = function(data) {
+    if(data == null || data == undefined) {
+        data = "";
+    }
+    return data;
+}
 
 var generatePersonalInformation = function(doc, data) {
 
@@ -126,6 +132,12 @@ var generatePersonalInformation = function(doc, data) {
 // Functions: Employment Information
 // ===============================================================================================
 var generateEmploymentInformation = function(doc, headers, data, pos) {
+    var code = "";
+    var isEmpty = true;
+    if(data != null || data != undefined) {
+        isEmpty = false;
+        code = checkEmpty(data[0].code)
+    }
 
     var xstart = pos.xstart;
     var ystart = pos.ystart;
@@ -144,8 +156,9 @@ var generateEmploymentInformation = function(doc, headers, data, pos) {
 
     // EMPLOYEE CODE: Data  
     doc.setFontStyle('normal');
-    doc.text('C-100451', pos.code_data.x, pos.code_data.y); // Employee Code: Dummy data
-    
+    if(!isEmpty) {
+        doc.text(code, pos.code_data.x, pos.code_data.y); // Employee Code: Dummy data
+    }
 
     // Data header
     doc.setFontStyle('bold');
@@ -189,58 +202,87 @@ var generateEmploymentInformation = function(doc, headers, data, pos) {
 
     // Data items
     doc.setFontStyle('normal');
-    for(var i = 0; i < data.length; i++) {
-        pos.line_extend += 10;
-        // [18, 345, 18, 355]
-        // [578, 345, 578, 355]
-        doc.text(data[i].title, xstart, y); // Title
-        doc.text(data[i].department, xstart + 90, y); // Department
-        doc.text(data[i].category, xstart + 220, y); // Category
-        doc.text(data[i].status, xstart + 290, y); // Status
-        doc.text(data[i].branch, xstart + 380, y); // Branch
-        doc.text(data[i].supervisor, xstart + 460, y); // Supervisor
-
-        doc.line(
-            pos.job_vline.left.x,
-            pos.job_vline.left.y + pos.line_extend,
-            pos.job_vline.left.w,
-            pos.job_vline.left.h + pos.line_extend
-        );
-
-        doc.line(
-            pos.job_vline.right.x,
-            pos.job_vline.right.y + pos.line_extend,
-            pos.job_vline.right.w,
-            pos.job_vline.right.h + pos.line_extend
-        );
-
-        y += 10;
-        if((i+1) == data.length) {
+    if(!isEmpty) {
+        for(var i = 0; i < data.length; i++) {
+            pos.line_extend += 10;
+            // [18, 345, 18, 355]
+            // [578, 345, 578, 355]
+            doc.text(checkEmpty(data[i].job_title), xstart, y); // Title
+            doc.text(checkEmpty(data[i].department), xstart + 90, y); // Department
+            doc.text(checkEmpty(data[i].job_category), xstart + 220, y); // Category
+            doc.text(checkEmpty(data[i].employment_status), xstart + 290, y); // Status
+            doc.text(checkEmpty(data[i].branch), xstart + 380, y); // Branch
+            doc.text(checkEmpty(data[i].supervisor), xstart + 460, y); // Supervisor
+    
             doc.line(
                 pos.job_vline.left.x,
-                pos.job_vline.left.y + pos.line_extend + 10,
+                pos.job_vline.left.y + pos.line_extend,
                 pos.job_vline.left.w,
-                pos.job_vline.left.h + pos.line_extend + 10
-            ); // Vertical line
+                pos.job_vline.left.h + pos.line_extend
+            );
     
             doc.line(
                 pos.job_vline.right.x,
-                pos.job_vline.right.y + pos.line_extend + 10,
+                pos.job_vline.right.y + pos.line_extend,
                 pos.job_vline.right.w,
-                pos.job_vline.right.h + pos.line_extend + 10
-            ); // Vertical line
-
-            doc.line(
-                18,
-                335 + pos.line_extend + 10,
-                578,
-                335 + pos.line_extend + 10
-            ); // Horizontal line
-
-
-            return 335 + pos.line_extend + 10
+                pos.job_vline.right.h + pos.line_extend
+            );
+    
+            y += 10;
+            if((i+1) == data.length) {
+                doc.line(
+                    pos.job_vline.left.x,
+                    pos.job_vline.left.y + pos.line_extend + 10,
+                    pos.job_vline.left.w,
+                    pos.job_vline.left.h + pos.line_extend + 10
+                ); // Vertical line
+        
+                doc.line(
+                    pos.job_vline.right.x,
+                    pos.job_vline.right.y + pos.line_extend + 10,
+                    pos.job_vline.right.w,
+                    pos.job_vline.right.h + pos.line_extend + 10
+                ); // Vertical line
+    
+                doc.line(
+                    18,
+                    335 + pos.line_extend + 10,
+                    578,
+                    335 + pos.line_extend + 10
+                ); // Horizontal line
+    
+    
+                return 335 + pos.line_extend + 10
+            }
         }
     }
+    else {
+        doc.line(
+            pos.job_vline.left.x,
+            pos.job_vline.left.y + pos.line_extend + 10,
+            pos.job_vline.left.w,
+            pos.job_vline.left.h + pos.line_extend + 10
+        ); // Vertical line
+
+        doc.line(
+            pos.job_vline.right.x,
+            pos.job_vline.right.y + pos.line_extend + 10,
+            pos.job_vline.right.w,
+            pos.job_vline.right.h + pos.line_extend + 10
+        ); // Vertical line
+        // -----
+
+        doc.line(
+            18,
+            335 + pos.line_extend + 10,
+            578,
+            335 + pos.line_extend + 10
+        ); // Horizontal line
+
+
+        return 335 + pos.line_extend + 10
+    }
+    
 }
 
 
@@ -254,6 +296,7 @@ var generateEmploymentInformation = function(doc, headers, data, pos) {
 // Functions: Work Experience
 // ===============================================================================================
 var generateWorkExperience = function(doc, headers, data, pos) {
+
 
     var xstart = pos.xstart;
     var ystart = pos.ystart;
@@ -309,56 +352,83 @@ var generateWorkExperience = function(doc, headers, data, pos) {
 
     // Data items
     doc.setFontStyle('normal');
-    for(var i = 0; i < data.length; i++) {
-        pos.line_extend += 10;
-        // [18, 345, 18, 355]
-        // [578, 345, 578, 355]
-        doc.text(data[i].company, xstart, y); // Company
-        doc.text(data[i].position, xstart + 100, y); // Position
-        doc.text(data[i].status, xstart + 230, y); // Status
-        doc.text(data[i].from, xstart + 380, y); // From
-        doc.text(data[i].to, xstart + 460, y); // To
-
-        doc.line(
-            pos.job_vline.left.x,
-            pos.job_vline.left.y + pos.line_extend,
-            pos.job_vline.left.w,
-            pos.job_vline.left.h + pos.line_extend
-        );
-
-        doc.line(
-            pos.job_vline.right.x,
-            pos.job_vline.right.y + pos.line_extend,
-            pos.job_vline.right.w,
-            pos.job_vline.right.h + pos.line_extend
-        );
-
-        y += 10;
-        if((i+1) == data.length) {
+    if(data != null) {
+        for(var i = 0; i < data.length; i++) {
+            pos.line_extend += 10;
+            // [18, 345, 18, 355]
+            // [578, 345, 578, 355]
+            doc.text(checkEmpty(data[i].company), xstart, y); // Company
+            doc.text(checkEmpty(data[i].position), xstart + 100, y); // Position
+            doc.text(checkEmpty(data[i].appointment_status), xstart + 230, y); // Status
+            doc.text(checkEmpty(data[i].date_from), xstart + 380, y); // From
+            doc.text(checkEmpty(data[i].date_to), xstart + 460, y); // To
+    
             doc.line(
                 pos.job_vline.left.x,
-                pos.job_vline.left.y + pos.line_extend + 10,
+                pos.job_vline.left.y + pos.line_extend,
                 pos.job_vline.left.w,
-                pos.job_vline.left.h + pos.line_extend + 10
-            ); // Vertical line
+                pos.job_vline.left.h + pos.line_extend
+            );
     
             doc.line(
                 pos.job_vline.right.x,
-                pos.job_vline.right.y + pos.line_extend + 10,
+                pos.job_vline.right.y + pos.line_extend,
                 pos.job_vline.right.w,
-                pos.job_vline.right.h + pos.line_extend + 10
-            ); // Vertical line
-
-            doc.line(
-                18,
-                pos.end_line + pos.line_extend + 10,
-                578,
-                pos.end_line + pos.line_extend + 10
-            ); // Horizontal line
-            
-            return pos.end_line + pos.line_extend + 10
+                pos.job_vline.right.h + pos.line_extend
+            );
+    
+            y += 10;
+            if((i+1) == data.length) {
+                doc.line(
+                    pos.job_vline.left.x,
+                    pos.job_vline.left.y + pos.line_extend + 10,
+                    pos.job_vline.left.w,
+                    pos.job_vline.left.h + pos.line_extend + 10
+                ); // Vertical line
+        
+                doc.line(
+                    pos.job_vline.right.x,
+                    pos.job_vline.right.y + pos.line_extend + 10,
+                    pos.job_vline.right.w,
+                    pos.job_vline.right.h + pos.line_extend + 10
+                ); // Vertical line
+    
+                doc.line(
+                    18,
+                    pos.end_line + pos.line_extend + 10,
+                    578,
+                    pos.end_line + pos.line_extend + 10
+                ); // Horizontal line
+                
+                return pos.end_line + pos.line_extend + 10
+            }
         }
     }
+    else {
+        doc.line(
+            pos.job_vline.left.x,
+            pos.job_vline.left.y + pos.line_extend + 10,
+            pos.job_vline.left.w,
+            pos.job_vline.left.h + pos.line_extend + 10
+        ); // Vertical line
+
+        doc.line(
+            pos.job_vline.right.x,
+            pos.job_vline.right.y + pos.line_extend + 10,
+            pos.job_vline.right.w,
+            pos.job_vline.right.h + pos.line_extend + 10
+        ); // Vertical line
+
+        doc.line(
+            18,
+            pos.end_line + pos.line_extend + 10,
+            578,
+            pos.end_line + pos.line_extend + 10
+        ); // Horizontal line
+        
+        return pos.end_line + pos.line_extend + 10
+    }
+    
 }
 
 
@@ -432,58 +502,115 @@ var generateEducationBackground = function(doc, headers, data, pos) {
     //     honor: 'Cum Laude'
     // },
 
-    // Data items
+    // Data items   
     doc.setFontStyle('normal');
-    for(var i = 0; i < data.length; i++) {
-        pos.line_extend += 10;
-        // [18, 345, 18, 355]
-        // [578, 345, 578, 355]
-        doc.text(data[i].level, xstart, y); // Level
-        doc.text(data[i].school_name, xstart + 100, y); // School Name
-        doc.text(data[i].degree, xstart + 230, y); // Degree
-        doc.text(data[i].inclusive, xstart + 380, y); // Inclusive
-        doc.text(data[i].honor, xstart + 460, y); // Honor
+    if(data != null) {
+        for(var i = 0; i < data.length; i++) {
+            if(data[i].background_level != "" && data[i].school_name != "" && data[i].degree != "") {
+                pos.line_extend += 10;
+                // [18, 345, 18, 355]
+                // [578, 345, 578, 355]
+                doc.text(checkEmpty(data[i].background_level), xstart, y); // Level
+                doc.text(checkEmpty(data[i].school_name), xstart + 100, y); // School Name
+                doc.text(checkEmpty(data[i].degree), xstart + 230, y); // Degree
+                var inclusive_years = "";
+                if(data[i].date_start != "" || data[i].date_end != "") {
+                    inclusive_years = data[i].date_start +"-"+ data[i].date_end;
+                }
+                doc.text(inclusive_years, xstart + 380, y); // Inclusive
+                doc.text(checkEmpty(data[i].honors), xstart + 460, y); // Honor
+        
+                doc.line(
+                    pos.job_vline.left.x,
+                    pos.job_vline.left.y + pos.line_extend,
+                    pos.job_vline.left.w,
+                    pos.job_vline.left.h + pos.line_extend
+                );
+        
+                doc.line(
+                    pos.job_vline.right.x,
+                    pos.job_vline.right.y + pos.line_extend,
+                    pos.job_vline.right.w,
+                    pos.job_vline.right.h + pos.line_extend
+                );
+        
+                y += 10;
+                if((i+1) == data.length) {
+                    doc.line(
+                        pos.job_vline.left.x,
+                        pos.job_vline.left.y + pos.line_extend + 10,
+                        pos.job_vline.left.w,
+                        pos.job_vline.left.h + pos.line_extend + 10
+                    ); // Vertical line
+            
+                    doc.line(
+                        pos.job_vline.right.x,
+                        pos.job_vline.right.y + pos.line_extend + 10,
+                        pos.job_vline.right.w,
+                        pos.job_vline.right.h + pos.line_extend + 10
+                    ); // Vertical line
+        
+                    doc.line(
+                        18,
+                        pos.end_line + pos.line_extend + 10,
+                        578,
+                        pos.end_line + pos.line_extend + 10
+                    ); // Horizontal line
+                    
+                    return pos.end_line + pos.line_extend + 10
+                }
+            }
+            else {
+                doc.line(
+                    pos.job_vline.left.x,
+                    pos.job_vline.left.y + pos.line_extend + 10,
+                    pos.job_vline.left.w,
+                    pos.job_vline.left.h + pos.line_extend + 10
+                ); // Vertical line
+        
+                doc.line(
+                    pos.job_vline.right.x,
+                    pos.job_vline.right.y + pos.line_extend + 10,
+                    pos.job_vline.right.w,
+                    pos.job_vline.right.h + pos.line_extend + 10
+                ); // Vertical line
 
+                doc.line(
+                    18,
+                    pos.end_line + pos.line_extend + 10,
+                    578,
+                    pos.end_line + pos.line_extend + 10
+                ); // Horizontal line
+        
+                return pos.end_line + pos.line_extend + 10
+            }
+        }
+    }
+    else {
         doc.line(
             pos.job_vline.left.x,
-            pos.job_vline.left.y + pos.line_extend,
+            pos.job_vline.left.y + pos.line_extend + 10,
             pos.job_vline.left.w,
-            pos.job_vline.left.h + pos.line_extend
-        );
+            pos.job_vline.left.h + pos.line_extend + 10
+        ); // Vertical line
 
         doc.line(
             pos.job_vline.right.x,
-            pos.job_vline.right.y + pos.line_extend,
+            pos.job_vline.right.y + pos.line_extend + 10,
             pos.job_vline.right.w,
-            pos.job_vline.right.h + pos.line_extend
-        );
+            pos.job_vline.right.h + pos.line_extend + 10
+        ); // Vertical line
 
-        y += 10;
-        if((i+1) == data.length) {
-            doc.line(
-                pos.job_vline.left.x,
-                pos.job_vline.left.y + pos.line_extend + 10,
-                pos.job_vline.left.w,
-                pos.job_vline.left.h + pos.line_extend + 10
-            ); // Vertical line
-    
-            doc.line(
-                pos.job_vline.right.x,
-                pos.job_vline.right.y + pos.line_extend + 10,
-                pos.job_vline.right.w,
-                pos.job_vline.right.h + pos.line_extend + 10
-            ); // Vertical line
+        doc.line(
+            18,
+            pos.end_line + pos.line_extend + 10,
+            578,
+            pos.end_line + pos.line_extend + 10
+        ); // Horizontal line
 
-            doc.line(
-                18,
-                pos.end_line + pos.line_extend + 10,
-                578,
-                pos.end_line + pos.line_extend + 10
-            ); // Horizontal line
-            
-            return pos.end_line + pos.line_extend + 10
-        }
+        return pos.end_line + pos.line_extend + 10
     }
+    
 }
 
 
@@ -495,6 +622,11 @@ var generateEducationBackground = function(doc, headers, data, pos) {
 
 // PDF Generator
 var generatePDF = function(data) {
+
+    console.log(">>>>>")
+    console.log(data);
+
+
     var doc = new jsPDF('p', 'pt', 'a4');
 
     doc.setProperties({
@@ -525,7 +657,7 @@ var generatePDF = function(data) {
     }
     
     // Details
-    var height_extend = generateEmploymentInformation(doc, job_headers, job_details, ei_pos);
+    var height_extend = generateEmploymentInformation(doc, job_headers, data.employment_details, ei_pos);
 
 
     // WORK EXPERIENCE
@@ -546,7 +678,7 @@ var generatePDF = function(data) {
     }
 
     // Details
-    height_extend = generateWorkExperience(doc, work_headers, work_details, we_pos);
+    height_extend = generateWorkExperience(doc, work_headers, data.work_experience, we_pos);
 
 
     // EDUCATION BACKGROUND
@@ -565,7 +697,7 @@ var generatePDF = function(data) {
         end_line: height_extend + 45,
     }
 
-    height_extend = generateEducationBackground(doc, education_headers, education_details, eb_pos);
+    height_extend = generateEducationBackground(doc, education_headers, data.education_background, eb_pos);
 
 
     // Save

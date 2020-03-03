@@ -75,7 +75,6 @@ submit.addEventListener('click', function() {
             data = JSON.parse(xhr.responseText);
             if(data.status != "500") {
                 openNewWindow(generatePDF(data));
-                console.log(data);
             }
             else {
                 alert("Code not found!");

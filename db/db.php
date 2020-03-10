@@ -17,8 +17,14 @@ class DB {
     }
 
 
-    // For employees
-    // ------------------------------------------------------------------------------
+
+/*
++------------------------------------------------------------------------------
+| Employees
++------------------------------------------------------------------------------
+| Retrieve data to be used in generating printable document to personnel profile reports
+|
+*/
     
     public static function getEmployees() {
         $db = connect();
@@ -244,16 +250,22 @@ class DB {
     }
 
 
-    // For demographics
-    // ------------------------------------------------------------------------------
 
-    public static function getEmployeeCountPerDepartment() {
+/*
++------------------------------------------------------------------------------
+| Demographics
++------------------------------------------------------------------------------
+| Retrieve data to be used in generating charts in demographics reports
+|
+*/
+
+    public static function getEmployeeCountPerOperatingUnit() {
 
         $db = connect();
 
         try {
 
-            $result = $db->query(Query::getEmployeeCountPerDepartment());
+            $result = $db->query(Query::getEmployeeCountPerOperatingUnit());
 
             if($result->num_rows > 0) {
 
@@ -261,8 +273,8 @@ class DB {
 
                 while($data = $result->fetch_assoc()) {
                     $dept               = new Demographics();
-                    $dept->name         = $data[0];
-                    $dept->population   = $data[1];
+                    $dept->name         = $data['operating_unit'];
+                    $dept->population   = $data['population'];
                     
                     array_push($department_population, $dept);
                 }
@@ -277,6 +289,37 @@ class DB {
             $db->close();
         }
     }
+
+
+    public static function getOperatingUnitCountPerBusinessUnit() {
+        $db = connect();
+
+        try {
+            $result = $db->query(Query::getOperatingUnitCountPerBusinessUnit());
+
+            if($result->num_rows > 0) {
+                
+                $business_unit_population = [];
+
+                while($data = $result->fetch_assoc()) {
+                    $stat               = new Demographics();
+                    $stat->name         = $data['business_unit'];
+                    $stat->population   = $data['population'];
+   
+                    array_push($business_unit_population, $stat);
+                }
+
+                return $business_unit_population;
+            }
+        }
+        catch(Exception $e) {
+            echo "--> Uncaught exception: ". $e->getMessage() . "<br/>";
+        }
+        finally {
+            $db->close();
+        }
+    }
+
 
     public static function getEmployeeCountPerCategory() {
        
@@ -376,4 +419,22 @@ class DB {
         }
     }
 }
+
+
+
+
+
+/*
++------------------------------------------------------------------------------
+| Testing
++------------------------------------------------------------------------------
+| Retrieve data to check its values
+|
+*/
+
+// echo "<pre>";
+// print_r(DB::getEmployeeCountPerOperatingUnit());
+// echo "</pre>";
+
+
 

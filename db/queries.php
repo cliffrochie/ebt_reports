@@ -187,18 +187,39 @@ class Query {
         return $sql;
     }
 
-    public static function getEmployeeCountPerDepartment() {
+    public static function getEmployeeCountPerOperatingUnit() {
 
         $sql = '
-            SELECT DISTINCT 
-            COALESCE(NULLIF(ED.U_EMPLOYEE_DEPARTMENT, ""), "No Department") as department,
+            SELECT DISTINCT
+            SU.`CODE` AS operating_unit_code,
+            SU.`NAME` AS operating_unit,
             (
-                SELECT COUNT(u_employee_details.`code`) 
-                FROM u_employee_details 
-                WHERE u_employee_details.U_EMPLOYEE_DEPARTMENT = ED.U_EMPLOYEE_DEPARTMENT
-            ) AS department_population
+                SELECT COUNT(u_employee_details.`CODE`)
+                FROM u_employee_details
+                WHERE u_employee_details.U_EMPLOYEE_OPERATING_UNIT = operating_unit_code
+            ) AS population
             FROM 
-            U_EMPLOYEE_DETAILS AS ED
+                u_setup_sub_unit AS SU
+            WHERE
+                SU.U_PARENT_ID <> ""
+        ';
+
+        return $sql;
+    }
+
+    public static function getOperatingUnitCountPerBusinessUnit() {
+
+        $sql = '
+            SELECT DISTINCT
+            SU.`name` AS business_unit,
+            (
+                SELECT COUNT(u_setup_sub_unit.CODE)
+                FROM u_setup_sub_unit
+                WHERE u_setup_sub_unit.u_parent_id = SU.code
+            ) AS population
+            FROM 
+            u_setup_sub_unit AS SU
+            WHERE SU.u_parent_id = ""
         ';
 
         return $sql;
@@ -233,6 +254,7 @@ class Query {
                 WHERE u_employee_details.U_EMPLOYEE_GENDER = gender
             ) AS gender_population
             FROM u_employee_details AS ED	
+            WHERE ED.U_EMPLOYEE_GENDER = "Male" OR ED.U_EMPLOYEE_GENDER = "Female"	
         ';
 
         return $sql;

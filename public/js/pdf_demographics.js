@@ -1,5 +1,17 @@
+var w;
+// var strWindowFeatures = "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=900,height=600,top="+(screen.height-750)+",left="+(screen.width-1150);
+var strWindowFeatures = "scrollbars=yes,resizable=yes,width=900,height=600,top="+(screen.height-750)+",left="+(screen.width-1150);
+
+var openNewWindow = function(pdf) {
+    w = window.open(pdf.output('bloburl'), "new_window", strWindowFeatures);
+}
+
+function onSubmit() {
+    openNewWindow(generateDemographicsPDF());
+}
+
 // onclick
-function generatePDF() {
+function generateDemographicsPDF() {
     var doc = new jsPDF('p', 'pt', 'a4');
     doc.internal.scaleFactor = 30;
 
@@ -51,5 +63,5 @@ function generatePDF() {
     doc.text('No. of Job Vacancies and its Position', 380, 340);
     doc.addImage(dataURL4, 'PNG', 300, 350, width, height);
 
-    doc.save('test.pdf');
+    return doc;
 }

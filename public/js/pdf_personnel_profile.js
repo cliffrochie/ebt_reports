@@ -1,6 +1,6 @@
 var checkEmpty = function(data) {
-    if(data == null || data == undefined) {
-        data = "";
+    if(data == null || data == undefined || data == "") {
+        data = "N/A";
     }
     return data;
 }
@@ -54,11 +54,11 @@ var generatePersonalInformation = function(doc, data) {
 
     // PERSONAL INFORMATION: Data
     doc.setFontStyle('normal');
-    doc.text(data.name, 25, 143); // NAME: Dummy data
-    doc.text(data.gender, 295, 143); // GENDER: Dummy data
-    doc.text(data.birthdate, 365, 143); // BIRTH DATE: Dummy data
-    doc.text(data.nationality, 435, 143); // NATIONALITY: Dummy data
-    doc.text(data.marital_status, 505, 143); // MARITAL STATUS: Dummy data
+    doc.text(checkEmpty(data.name), 25, 143); // NAME: Dummy data
+    doc.text(checkEmpty(data.gender), 295, 143); // GENDER: Dummy data
+    doc.text(checkEmpty(data.birthdate), 365, 143); // BIRTH DATE: Dummy data
+    doc.text(checkEmpty(data.nationality), 435, 143); // NATIONALITY: Dummy data
+    doc.text(checkEmpty(data.marital_status), 505, 143); // MARITAL STATUS: Dummy data
 
     // PRESENT ADDRESS: Fields  
     // -----------------------------------------------------------------------------------------------
@@ -76,11 +76,11 @@ var generatePersonalInformation = function(doc, data) {
 
     // PRESENT ADDRESS: Data
     doc.setFontStyle('normal');
-    doc.text(data.street, 25, 190); // Street: Dummy data
-    doc.text(data.city, 120, 190); // City: Dummy data
-    doc.text(data.state_province, 190, 190); // State: Dummy data
-    doc.text(data.country, 290, 190); // Country: Dummy data
-    doc.text(data.zip, 370, 190); // Zip Code: Dummy data
+    doc.text(checkEmpty(data.street), 25, 190); // Street: Dummy data
+    doc.text(checkEmpty(data.city), 120, 190); // City: Dummy data
+    doc.text(checkEmpty(data.state_province), 190, 190); // State: Dummy data
+    doc.text(checkEmpty(data.country), 290, 190); // Country: Dummy data
+    doc.text(checkEmpty(data.zip), 370, 190); // Zip Code: Dummy data
 
     // EMAIL ADDRESS: Fields  
     // -----------------------------------------------------------------------------------------------
@@ -131,12 +131,11 @@ var generatePersonalInformation = function(doc, data) {
 
 // Functions: Employment Information
 // ===============================================================================================
-var generateEmploymentInformation = function(doc, headers, data, pos) {
-    var code = "";
+var generateEmploymentInformation = function(doc, headers, employee_code, data, pos) {
+    
     var isEmpty = true;
     if(data != null || data != undefined) {
         isEmpty = false;
-        code = checkEmpty(data[0].code)
     }
 
     var xstart = pos.xstart;
@@ -156,18 +155,16 @@ var generateEmploymentInformation = function(doc, headers, data, pos) {
 
     // EMPLOYEE CODE: Data  
     doc.setFontStyle('normal');
-    if(!isEmpty) {
-        doc.text(code, pos.code_data.x, pos.code_data.y); // Employee Code: Dummy data
-    }
+    doc.text(employee_code, pos.code_data.x, pos.code_data.y); // Employee Code: Dummy data
 
     // Data header
     doc.setFontStyle('bold');
     doc.setFontSize(7);
     doc.text(headers[0], pos.job_header.x, pos.job_header.y);
-    doc.text(headers[1], pos.job_header.x + 90, pos.job_header.y);
-    doc.text(headers[2], pos.job_header.x + 220, pos.job_header.y);
-    doc.text(headers[3], pos.job_header.x + 290, pos.job_header.y);
-    doc.text(headers[4], pos.job_header.x + 380, pos.job_header.y);
+    doc.text(headers[1], pos.job_header.x + 80, pos.job_header.y);
+    doc.text(headers[2], pos.job_header.x + 165, pos.job_header.y);
+    doc.text(headers[3], pos.job_header.x + 260, pos.job_header.y);
+    doc.text(headers[4], pos.job_header.x + 350, pos.job_header.y);
     doc.text(headers[5], pos.job_header.x + 460, pos.job_header.y);
     
     // Header 
@@ -208,10 +205,10 @@ var generateEmploymentInformation = function(doc, headers, data, pos) {
             // [18, 345, 18, 355]
             // [578, 345, 578, 355]
             doc.text(checkEmpty(data[i].job_title), xstart, y); // Title
-            doc.text(checkEmpty(data[i].department), xstart + 90, y); // Department
-            doc.text(checkEmpty(data[i].job_category), xstart + 220, y); // Category
-            doc.text(checkEmpty(data[i].employment_status), xstart + 290, y); // Status
-            doc.text(checkEmpty(data[i].branch), xstart + 380, y); // Branch
+            doc.text(checkEmpty(data[i].operating_unit), xstart + 80, y); // Department
+            doc.text(checkEmpty(data[i].job_category), xstart + 165, y); // Category
+            doc.text(checkEmpty(data[i].employment_status), xstart + 260, y); // Status
+            doc.text(checkEmpty(data[i].business_unit), xstart + 350, y); // Branch
             doc.text(checkEmpty(data[i].supervisor), xstart + 460, y); // Supervisor
     
             doc.line(
@@ -251,7 +248,6 @@ var generateEmploymentInformation = function(doc, headers, data, pos) {
                     335 + pos.line_extend + 10
                 ); // Horizontal line
     
-    
                 return 335 + pos.line_extend + 10
             }
         }
@@ -278,7 +274,6 @@ var generateEmploymentInformation = function(doc, headers, data, pos) {
             578,
             335 + pos.line_extend + 10
         ); // Horizontal line
-
 
         return 335 + pos.line_extend + 10
     }
@@ -657,7 +652,7 @@ var generatePDF = function(data) {
     }
     
     // Details
-    var height_extend = generateEmploymentInformation(doc, job_headers, data.employment_details, ei_pos);
+    var height_extend = generateEmploymentInformation(doc, job_headers, data.code, data.employment_details, ei_pos);
 
 
     // WORK EXPERIENCE

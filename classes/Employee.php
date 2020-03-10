@@ -4,12 +4,11 @@ include_once(dirname(__FILE__) .'/../db/db.php');
 class EmploymentDetails {
     // Employee Details
     public $code;
-    public $company;
-    public $branch;
     public $job_title;  
     public $job_category;
     public $employment_status;
-    public $department;
+    public $operating_unit;
+    public $business_unit;
     public $supervisor;
 }
 
@@ -43,6 +42,8 @@ class EmergencyContactPerson {
 }
 
 class Employee {
+
+    public $code;
 
     public $status;
     public $message;

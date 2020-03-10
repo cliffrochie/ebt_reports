@@ -26,6 +26,17 @@
     </div>
 
     <script>
+        var arr = [];
+
+        if(arr === undefined || arr.length == 0) {
+            console.log("empty");
+        }
+        else {
+            console.log("not");
+        }
+    </script>
+
+    <script>
         function getEmployees() {
             var employees = <?php echo json_encode(Employee::all()); ?>;
             return employees;

@@ -10,7 +10,7 @@
 </head>
 <body>
     <div>
-        <button id="generate_pdf" onclick="generatePDF()">Generate</button>
+        <button id="generate_pdf" onclick="onSubmit()">Generate</button>
     </div>
     <div class="container" id="demographics_content">
         <div class="date">
@@ -46,6 +46,5 @@
     <script src="public/js/data_demographics.js"></script>
     <script src="public/js/chart_demographics.js"></script>
     <script src="public/js/pdf_demographics.js"></script>
-    <script src="public/js/event_demographics.js"></script>
 </body>
 </html>

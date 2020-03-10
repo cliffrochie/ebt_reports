@@ -65,20 +65,62 @@ class Query {
 
         $sql = '
         SELECT
-        -- personal information
-        ED.`code`,
-        EJ.U_EMPLOYEE_EMPLOYMENT_JOB_TITLE AS "ej_job_title",
-        EJ.U_EMPLOYEE_EMPLOYMENT_JOB_CATEGORY AS "ej_job_category",
-        EJ.U_EMPLOYEE_EMPLOYMENT_STATUS AS "ej_employment_status",
-        EJ.U_DEPARTMENT AS "ej_department",
-        -- employee supervisor
-        ER.U_EMPLOYEE_SUPERVISOR AS "er_supervisor"
-        FROM 
-        u_employee_details AS ED
+            -- personal information
+            ED.`code`,
+            EJ.U_EMPLOYEE_EMPLOYMENT_JOB_TITLE AS "ej_job_title",
+            EJ.U_EMPLOYEE_EMPLOYMENT_JOB_CATEGORY AS "ej_job_category",
+            EJ.U_EMPLOYEE_EMPLOYMENT_STATUS AS "ej_employment_status",
+            (
+                SELECT
+                    SU.`NAME`
+                FROM
+                    u_setup_sub_unit AS SU
+                WHERE
+                    SU.`CODE` = ED.U_EMPLOYEE_OPERATING_UNIT
+            ) AS "su_operating_unit",
+            (
+                SELECT
+                    (
+                        SELECT
+                            u_setup_sub_unit.`NAME`
+                        FROM
+                            u_setup_sub_unit
+                        WHERE
+                            u_setup_sub_unit.`CODE` = SU.U_PARENT_ID
+                    )
+                FROM
+                    u_setup_sub_unit AS SU
+                INNER JOIN u_employee_details AS ED ON ED.U_EMPLOYEE_OPERATING_UNIT = SU.`CODE`
+                WHERE
+                    ED. CODE = "'. $id .'"
+            ) AS "su_business_unit",
+            (
+                SELECT
+                    (
+                        SELECT
+                            u_employee_details.`NAME`
+                        FROM
+                            u_employee_details
+                        INNER JOIN u_employee_supervisor ON u_employee_supervisor.U_EMPLOYEE_SUPERVISOR_CODE = u_employee_details.`CODE`
+                        WHERE
+                            u_employee_supervisor.`CODE` = ED.`CODE`
+                        ORDER BY
+                            u_employee_details.DATECREATED DESC
+                        LIMIT 1
+                    )
+                FROM
+                    u_employee_details AS ED
+                WHERE
+                    ED.`CODE` = "'. $id .'"
+            ) AS "es_supervisor"
+        FROM
+            u_employee_details AS ED
         LEFT JOIN u_employee_job AS EJ ON ED.`CODE` = EJ.`CODE`
         LEFT JOIN u_employee_reports_to AS ER ON ER.`code` = EJ.`code`
-        WHERE EJ.u_current_job = 1
-        AND ED.`CODE` = "'. $id .'"
+        WHERE
+            EJ.u_current_job = 1
+        AND 
+            ED.`CODE` = "'. $id .'";
         ';
     
         return $sql;

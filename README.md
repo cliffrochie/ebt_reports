@@ -1,4 +1,4 @@
 # ebt_reports
-Custom reports generator (pdf)
+Custom reports pdf generator (jspdf)
 
 For personal use only

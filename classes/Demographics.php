@@ -8,8 +8,11 @@ class Demographics {
     
     public static function all($type) {
         switch($type) {
-            case 'department':
-                return DB::getEmployeeCountPerDepartment();
+            case 'operating_unit':
+                return DB::getEmployeeCountPerOperatingUnit();
+            break;
+            case 'business_unit':
+                return DB::getOperatingUnitCountPerBusinessUnit();
             break;
             case 'category':
                 return DB::getEmployeeCountPerCategory();
@@ -20,6 +23,7 @@ class Demographics {
             case 'vacancy':
                 return DB::getJobVacancy();
             break;
+            
             default:
                 return false;
             break;

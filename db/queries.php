@@ -187,6 +187,9 @@ class Query {
         return $sql;
     }
 
+
+
+    // Demographics
     public static function getEmployeeCountPerOperatingUnit() {
 
         $sql = '

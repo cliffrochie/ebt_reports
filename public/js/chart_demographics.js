@@ -1,7 +1,11 @@
 // Chart objects
-var bar1 = new Chart(dept_pop, {
+
+// Operating Unit
+
+
+var bar1 = new Chart(operating_unit_population, {
     type: 'horizontalBar',
-    data: dept_data,
+    data: insertOperatingUnit(),
     options: {
         tooltips: {
             "enabled": false
@@ -41,7 +45,7 @@ var bar1 = new Chart(dept_pop, {
                     var meta = chartInstance.controller.getDatasetMeta(i);
                     meta.data.forEach(function (bar, index) {
                         var data = dataset.data[index];                            
-                        ctx.fillText(data, bar._model.x - 14, bar._model.y + 6.5);
+                        ctx.fillText(data, bar._model.x - 10, bar._model.y + 6.5);
                     });
                 });
             }
@@ -49,9 +53,11 @@ var bar1 = new Chart(dept_pop, {
     }
 });
 
-var bar2 = new Chart(cate_pop, {
+
+// Business Unit
+var bar2 = new Chart(business_unit_population, {
     type: 'horizontalBar',
-    data: cate_data,
+    data: insertBusinessUnit(),
     options: {
         tooltips: {
             "enabled": false
@@ -91,7 +97,7 @@ var bar2 = new Chart(cate_pop, {
                     var meta = chartInstance.controller.getDatasetMeta(i);
                     meta.data.forEach(function (bar, index) {
                         var data = dataset.data[index];                            
-                        ctx.fillText(data, bar._model.x - 14, bar._model.y + 6.5);
+                        ctx.fillText(data, bar._model.x - 10, bar._model.y + 6.5);
                     });
                 });
             }
@@ -99,9 +105,11 @@ var bar2 = new Chart(cate_pop, {
     }
 });
 
-var bar3 = new Chart(gend_pop, {
-    type: 'bar',
-    data: gend_data,
+
+// Category
+var bar3 = new Chart(category_population, {
+    type: 'horizontalBar',
+    data: insertCategory(),
     options: {
         tooltips: {
             "enabled": false
@@ -144,7 +152,7 @@ var bar3 = new Chart(gend_pop, {
                     var meta = chartInstance.controller.getDatasetMeta(i);
                     meta.data.forEach(function (bar, index) {
                         var data = dataset.data[index];                            
-                        ctx.fillText(data, bar._model.x, bar._model.y + 25);
+                        ctx.fillText(data, bar._model.x - 10, bar._model.y + 6.5);
                     });
                 });
             }
@@ -153,9 +161,9 @@ var bar3 = new Chart(gend_pop, {
 });
 
 
-var bar4 = new Chart(jobv_pop, {
+var bar4 = new Chart(gender_population, {
     type: 'bar',
-    data: jobv_data,
+    data: insertGender(),
     options: {
         tooltips: {
             "enabled": false

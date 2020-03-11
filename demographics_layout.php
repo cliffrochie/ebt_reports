@@ -1,3 +1,6 @@
+<?php     
+    require_once(dirname(__FILE__) .'/classes/Demographics.php'); 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,20 +28,41 @@
         </div>
         <div class="chart-content">
             <div class="left">
-                <canvas id="department_population"></canvas>
+                <canvas id="operating_unit_population"></canvas>
             </div>
             <div class="right">
-                <canvas id="category_population"></canvas>
+                <canvas id="business_unit_population"></canvas>
             </div>
             <div class="left">
-                <canvas id="gender_population"></canvas>
+                <canvas id="category_population"></canvas>
             </div>
             <div class="right">
-                <canvas id="job_vacancies_population"></canvas>
+                <canvas id="gender_population"></canvas>
             </div>
         </div>
     </div>
 
+    <script>
+        function getOperatingUnit() {
+            var data = <?php echo json_encode(Demographics::all('operating_unit')); ?>;
+            return data;
+        }
+
+        function getBusinessUnit() {
+            var data = <?php echo json_encode(Demographics::all('business_unit')); ?>;
+            return data;
+        }
+
+        function getCategory() {
+            var data = <?php echo json_encode(Demographics::all('category')); ?>;
+            return data;
+        }
+
+        function getGender() {
+            var data = <?php echo json_encode(Demographics::all('gender')); ?>;
+            return data;
+        }
+    </script>
     <script src="public/js/chart.min.js"></script>
     <script src="public/js/jspdf.debug.js"></script>
     <script src="public/js/html2pdf.js"></script>

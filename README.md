@@ -1,4 +1,4 @@
 # ebt_reports
 Custom reports pdf generator (jspdf)
 
-For personal use only
+This module relies to its main system in order to work.
